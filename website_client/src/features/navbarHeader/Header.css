@@ -1,0 +1,138 @@
+.navbar-custom {
+  background-color: #cc0000;
+  height: 60px;
+}
+.navbar-brand {
+  font-family: Eczar;
+  color: #ffffff;
+  font-size: 28px;
+}
+
+.navbar-toggler element.style {
+  border: transparent;
+  padding: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+.navi-rightt .cart-button {
+  color: white;
+}
+.navi-rightt .user-login {
+  color: white;
+  font-size: 25px;
+}
+
+.container-4 input#search {
+  width: 0px;
+  height: 30px;
+  vertical-align: text-bottom;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  float: left;
+  color: black;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+
+  -webkit-transition: width 0.55s ease;
+  -moz-transition: width 0.55s ease;
+  -ms-transition: width 0.55s ease;
+  -o-transition: width 0.55s ease;
+  transition: width 0.55s ease;
+}
+
+.container-4 input#search::-webkit-input-placeholder {
+  color: grey;
+}
+
+.container-4 input#search:-moz-placeholder {
+  /* Firefox 18- */
+  color: grey;
+}
+
+.container-4 input#search::-moz-placeholder {
+  /* Firefox 19+ */
+  color: grey;
+}
+
+.container-4 input#search:-ms-input-placeholder {
+  color: grey;
+}
+
+.container-4 .btn {
+  color: white;
+}
+
+.container-4 input#search:focus,
+.container-4 input#search:active {
+  outline: none;
+  width: 250px;
+  background: white;
+}
+
+.container-4:hover input#search {
+  width: 250px;
+  background: white;
+}
+
+.container-4:hover .btn {
+  color: white;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar-brand {
+    font-family: Eczar;
+    color: #ffffff;
+    font-size: 28px;
+    margin-right: 0px;
+  }
+  .navi-rightt .cart-button {
+    color: white;
+    padding-top: 5px;
+  }
+  .navi-rightt .user-login {
+    color: white;
+    padding-top: 5px;
+    vertical-align: middle;
+  }
+  .container-4 .search-button {
+    padding: 0rem 5px;
+  }
+  .toggler-expandd {
+    background-color: white;
+  }
+  .nav-link {
+    color: black !important;
+    margin-left: 15px;
+    font: 20px;
+  }
+  .container-4 input#search {
+    width: 200px;
+    background: black;
+    margin-left: 15px;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+  .container-4:hover input#search {
+    width: 200px;
+    background: black;
+  }
+  .container-4 input#search:focus,
+  .container-4 input#search:active {
+    outline: none;
+    width: 200px;
+    background: black;
+  }
+  .container-4:hover .btn {
+    color: black;
+  }
+  .container-4 .btn {
+    color: black;
+  }
+}

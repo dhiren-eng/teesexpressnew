@@ -1,0 +1,27 @@
+.fa-stack[data-count]:after {
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  content: attr(data-count);
+  font-size: 50%;
+  padding: 0.6em;
+  border-radius: 999px;
+  line-height: 0.75em;
+  color: #cc0000;
+  text-align: center;
+  min-width: 2em;
+  font-weight: 900;
+  background: white;
+  font-family: 'Franklin Gothic Medium';
+}
+.fa-circle {
+  color: white;
+}
+
+.red-cart {
+  color: white;
+  background: #cc0000;
+}
+[data-count] {
+  font-size: 20px;
+}
