@@ -1,15 +1,17 @@
 import React from 'react';
 import Header from './features/navbarHeader/Header';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
+import history from './history';
 import LoginForm from './features/login/LoginForm';
 import Homepage from './features/home/Homepage';
 import CartListContainer from './features/cart/CartListContainer';
 import CategoryDetailsContainer from './features/products/CategoryDetailsContainer';
 import EditCartItem from './features/cart/EditCartItem';
+import DeleteCartItem from './features/cart/DeleteCartItem';
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <div>
           <Header />
           <Route path="/" exact component={Homepage} />
@@ -21,8 +23,9 @@ class App extends React.Component {
           />
           <Route path="/cart" exact component={CartListContainer} />
           <Route path="/cart/edit/:id" exact component={EditCartItem} />
+          <Route path="/cart/delete/:id" exact component={DeleteCartItem} />
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

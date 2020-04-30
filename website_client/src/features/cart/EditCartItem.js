@@ -4,6 +4,8 @@ import CategoryDetailsComponent from '../products/CategoryDetailsComponent';
 import { cartOperations } from './ducks';
 const EditCartItem = (props) => {
   const updateCartItemButton = (id, obj) => {
+    console.log(id);
+    console.log(obj);
     return (
       <button
         className="btn btn-primary"
@@ -31,8 +33,12 @@ const EditCartItem = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
+  console.log(id);
+  const itemArr = state.cart.filter((item) => item.id == id);
+  const item = itemArr[0];
+  console.log(item);
   return {
-    cartItem: state.cart[id],
+    cartItem: item,
   };
 };
 export default connect(mapStateToProps, {
