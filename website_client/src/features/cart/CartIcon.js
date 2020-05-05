@@ -1,7 +1,7 @@
 import React from 'react';
 import './CartIcon.css';
 import { connect } from 'react-redux';
-import { cartOperations } from '../cart/ducks';
+import { cartOperations } from './ducks';
 class CartIcon extends React.Component {
   componentDidMount = () => {
     this.props.initCartLS();

@@ -10,6 +10,7 @@ class CategoryDetailsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      orderName: '',
       cateName: props.item.cateName,
       color: 'Black',
       printingOn: [],
@@ -210,6 +211,14 @@ class CategoryDetailsComponent extends React.Component {
         <div>
           <form className="container-fluid" onSubmit={this.handleFormSubmit}>
             <h3>{this.props.item.cateName}</h3>
+            <Input
+              title={'Order name :'}
+              name={'orderName'}
+              inputType={'text'}
+              handleChange={this.handleInput}
+              placeholder={'Enter a relevant order name'}
+              value={this.state.orderName}
+            />
             <Select
               title={'Select Color of item :'}
               name={'color'}

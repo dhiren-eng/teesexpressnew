@@ -36,9 +36,18 @@ class GoogleAuthButton extends React.Component {
     if (this.props.isSignedIn === null) {
       return <div></div>;
     } else if (this.props.isSignedIn === false) {
-      return <button onClick={this.signIn}>Sign In</button>;
+      return (
+        <button onClick={this.signIn} className="btn btn-danger">
+          <i className="fab fa-google" aria-hidden="true"></i> Sign In with
+          Google
+        </button>
+      );
     } else if (this.props.isSignedIn === true) {
-      return <button onClick={this.signOut}>Sign Out</button>;
+      return (
+        <button onClick={this.signOut} className="btn btn-danger">
+          <i className="fab fa-google" aria-hidden="true"></i> Sign Out
+        </button>
+      );
     }
   }
 }

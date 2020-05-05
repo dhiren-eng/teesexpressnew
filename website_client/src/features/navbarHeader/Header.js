@@ -1,7 +1,7 @@
 import React from 'react';
-import GoogleAuthButton from '../login/GoogleAuthButton';
-import CartIcon from './CartIcon';
+import CartIcon from '../cart/CartIcon';
 import { Link } from 'react-router-dom';
+import LoginButton from '../login/LoginButton';
 import './Header.css';
 class Header extends React.Component {
   render() {
@@ -18,9 +18,7 @@ class Header extends React.Component {
             data-target="#navbarResponsive"
             style={{ padding: '10px' }}
           >
-            <i className="material-icons md-light" style={{ color: 'white' }}>
-              dehaze
-            </i>
+            <i class="fas fa-bars" style={{ color: 'white' }}></i>
           </button>
           <Link
             to="/"
@@ -61,7 +59,7 @@ class Header extends React.Component {
             <div className="container-4 nav-item ml-auto">
               <input type="search" id="search" placeholder="Search..." />
               <button type="button" className="btn d-flex search-button">
-                <i className="material-icons">search</i>
+                <i class="fas fa-search" style={{ fontSize: '18px' }}></i>
               </button>
             </div>
           </div>
@@ -70,14 +68,7 @@ class Header extends React.Component {
             <Link to="/cart">
               <CartIcon />
             </Link>
-            <Link
-              to="/login"
-              style={{
-                margin: '15px 10px',
-              }}
-            >
-              <i className="material-icons user-login">person</i>
-            </Link>
+            <LoginButton />
           </div>
         </div>
       </nav>

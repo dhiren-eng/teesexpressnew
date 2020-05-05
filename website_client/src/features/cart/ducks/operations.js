@@ -12,6 +12,7 @@ const addToCartLS = (cartItem) => async (dispatch) => {
   dispatch(actions.addToCartAc(contents));
   const cartContent = JSON.stringify(contents);
   await localStorage.setItem('cart', cartContent);
+  history.push('/cart');
 };
 const updateCartItemLS = (id, cartItem) => async (dispatch) => {
   let contents = JSON.parse(localStorage.getItem('cart') || '[]');

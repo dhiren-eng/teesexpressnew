@@ -1,5 +1,6 @@
 import React from 'react';
 const displayListHOC = (ItemComponent) => (props) => {
+  console.log(props.listItemButtons);
   return (
     <div>
       {props.itemList.map((element) => {

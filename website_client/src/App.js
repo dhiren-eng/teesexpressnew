@@ -8,6 +8,7 @@ import CartListContainer from './features/cart/CartListContainer';
 import CategoryDetailsContainer from './features/products/CategoryDetailsContainer';
 import EditCartItem from './features/cart/EditCartItem';
 import DeleteCartItem from './features/cart/DeleteCartItem';
+import LoginModal from './features/login/LoginModal';
 class App extends React.Component {
   render() {
     return (
@@ -24,6 +25,7 @@ class App extends React.Component {
           <Route path="/cart" exact component={CartListContainer} />
           <Route path="/cart/edit/:id" exact component={EditCartItem} />
           <Route path="/cart/delete/:id" exact component={DeleteCartItem} />
+          <Route path="/loginModal" exact component={LoginModal} />
         </div>
       </Router>
     );
