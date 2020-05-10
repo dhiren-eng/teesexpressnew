@@ -3,20 +3,22 @@ import { loginActions } from './ducks';
 import { connect } from 'react-redux';
 class GoogleAuthButton extends React.Component {
   componentDidMount = () => {
-    window.gapi.load('client:auth2', () => {
-      window.gapi.client
-        .init({
-          clientId:
-            '981179991873-5vk2e1hhn3esqq2491i0keiva4ebvdsg.apps.googleusercontent.com',
-          scope: 'email',
-          prompt: 'select_account',
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
+    if (window.gapi) {
+      window.gapi.load('client:auth2', () => {
+        window.gapi.client
+          .init({
+            clientId:
+              '981179991873-5vk2e1hhn3esqq2491i0keiva4ebvdsg.apps.googleusercontent.com',
+            scope: 'email',
+            prompt: 'select_account',
+          })
+          .then(() => {
+            this.auth = window.gapi.auth2.getAuthInstance();
+            this.onAuthChange(this.auth.isSignedIn.get());
+            this.auth.isSignedIn.listen(this.onAuthChange);
+          });
+      });
+    }
   };
   onAuthChange = (isSignedIn) => {
     console.log(isSignedIn);
@@ -53,7 +55,7 @@ class GoogleAuthButton extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.signInStatus.isSignedIn,
+    isSignedIn: state.login.isSignedIn,
   };
 };
 export default connect(mapStateToProps, {

@@ -1,4 +1,5 @@
-import authReducer from './authReducer';
+import loginReducer from './reducers';
 export { default as loginActions } from './actions';
 export { default as loginTypes } from './types';
-export default authReducer;
+export { default as loginOperations } from './operations';
+export default loginReducer;

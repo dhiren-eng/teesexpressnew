@@ -28,9 +28,12 @@ class CartIcon extends React.Component {
       >
         <i className="fa fa-circle fa-stack-1x fa-inverse"></i>
         <i className="fa fa-shopping-cart fa-stack-1x red-cart"></i>
-        {this.listenToLS()}
       </span>
     );
+  }
+  componentDidUpdate() {
+    console.log('component did update');
+    this.listenToLS();
   }
 }
 const mapStateToProps = (state) => {

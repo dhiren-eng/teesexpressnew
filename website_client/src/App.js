@@ -2,13 +2,13 @@ import React from 'react';
 import Header from './features/navbarHeader/Header';
 import { Router, Route } from 'react-router-dom';
 import history from './history';
-import LoginForm from './features/login/LoginForm';
 import Homepage from './features/home/Homepage';
 import CartListContainer from './features/cart/CartListContainer';
 import CategoryDetailsContainer from './features/products/CategoryDetailsContainer';
 import EditCartItem from './features/cart/EditCartItem';
 import DeleteCartItem from './features/cart/DeleteCartItem';
 import LoginModal from './features/login/LoginModal';
+import RegisterCustomerContainer from './features/register/RegisterCustomerContainer';
 class App extends React.Component {
   render() {
     return (
@@ -16,7 +16,6 @@ class App extends React.Component {
         <div>
           <Header />
           <Route path="/" exact component={Homepage} />
-          <Route path="/login" exact component={LoginForm} />
           <Route
             path="/products/:id"
             exact
@@ -26,6 +25,11 @@ class App extends React.Component {
           <Route path="/cart/edit/:id" exact component={EditCartItem} />
           <Route path="/cart/delete/:id" exact component={DeleteCartItem} />
           <Route path="/loginModal" exact component={LoginModal} />
+          <Route
+            path="/registerCustomer"
+            exact
+            component={RegisterCustomerContainer}
+          />
         </div>
       </Router>
     );

@@ -1,4 +1,4 @@
 module.exports = {
-  secret: 'Geekboots created Created T-shirtFly',
-  secretAdm: "T-shirtFly manage by Admin"
+  secret: 'Dhiren Punjabi made API',
+  secretAdm: 'T-shirtFly manage by Admin',
 };

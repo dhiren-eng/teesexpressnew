@@ -11,7 +11,8 @@ class Header extends React.Component {
         style={{ padding: '0px' }}
       >
         <div className="container-fluid d-flex flex-row">
-          <button
+          <Link
+            to="#"
             type="button"
             className="navbar-toggler"
             data-toggle="collapse"
@@ -19,7 +20,7 @@ class Header extends React.Component {
             style={{ padding: '10px' }}
           >
             <i class="fas fa-bars" style={{ color: 'white' }}></i>
-          </button>
+          </Link>
           <Link
             to="/"
             href="#"
@@ -65,7 +66,12 @@ class Header extends React.Component {
           </div>
 
           <div className="d-flex ml-auto navi-rightt order-2 order-md-3">
-            <Link to="/cart">
+            <Link
+              to="/cart"
+              style={{
+                width: '50px',
+              }}
+            >
               <CartIcon />
             </Link>
             <LoginButton />

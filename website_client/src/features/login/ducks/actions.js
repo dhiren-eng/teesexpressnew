@@ -11,4 +11,10 @@ const googleSignOut = () => {
     payload: null,
   };
 };
-export default { googleSignIn, googleSignOut };
+const fetchUser = (obj) => {
+  return {
+    type: types.FETCH_USER,
+    payload: obj,
+  };
+};
+export default { googleSignIn, googleSignOut, fetchUser };
