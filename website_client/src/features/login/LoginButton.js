@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginOperations } from './ducks';
+import _ from 'lodash';
 import './LoginButton.css';
 class LoginButton extends React.Component {
   async componentDidMount() {
-    const loginLS = await JSON.parse(localStorage.getItem('usrEmail'));
-    if (loginLS != null && this.props.userInfo == null) {
+    const loginLS = await JSON.parse(localStorage.getItem('login'));
+    if (!_.isEmpty(loginLS) && _.isEmpty(this.props.userInfo)) {
       await this.props.fetchUser();
     }
   }
@@ -48,15 +49,17 @@ class LoginButton extends React.Component {
     );
   };
   listenToLS = () => {
-    window.addEventListener('storage', () => {
+    window.addEventListener('storage', async () => {
       console.log('Token Listener called');
       const loginLS = localStorage.getItem('login');
       console.log(loginLS);
-      this.props.fetchUser();
+      await this.props.fetchUser();
     });
   };
   render() {
-    return this.props.userInfo == null ? this.notSignedIn() : this.signedIn();
+    return _.isEmpty(this.props.userInfo)
+      ? this.notSignedIn()
+      : this.signedIn();
   }
   componentDidUpdate() {
     console.log('component did update');
@@ -65,10 +68,9 @@ class LoginButton extends React.Component {
 }
 const mapStateToProps = (state) => {
   var initialss = '';
-  if (state.login.userInfo) {
-    var item = state.login.userInfo.fullName.split(' ');
-    var initialss =
-      item[0].charAt(0).toUpperCase() + item[1].charAt(0).toUpperCase();
+  if (!_.isEmpty(state.login.userInfo)) {
+    var item = state.login.userInfo.usrName.split(' ');
+    item.forEach((element) => (initialss += element.charAt(0).toUpperCase()));
   }
 
   return {

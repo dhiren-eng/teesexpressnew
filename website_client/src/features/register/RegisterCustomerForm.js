@@ -32,8 +32,9 @@ class RegisterCustomerForm extends React.Component {
       </div>
     );
   };
-  onSubmitt = (formValues) => {
-    this.props.registerCustomerAction(formValues);
+  onSubmitt = async (formValues) => {
+    await this.props.registerCustomerAction(formValues);
+    await this.props.userLogin(formValues.Email, formValues.password);
   };
   render() {
     return (

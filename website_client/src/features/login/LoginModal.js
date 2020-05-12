@@ -67,7 +67,9 @@ class LoginModal extends React.Component {
         </button>
         <br />
         <br />
-        <GoogleAuthButton /> <br />
+        <GoogleAuthButton />
+
+        <br />
         <br />
         {this.state.loginError.localeCompare('') != 0 &&
         this.state.change.localeCompare('') == 0 ? (

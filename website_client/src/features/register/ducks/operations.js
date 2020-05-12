@@ -1,4 +1,4 @@
-import types from './types';
+import history from '../../../history';
 import axios from '../../../backendApiCall/axiosInstance';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
 const registerCustomer = (obj) => async (dispatch) => {
@@ -13,5 +13,6 @@ const registerCustomer = (obj) => async (dispatch) => {
     dispatch(fetchErrorAction(error));
   });
   console.log(response);
+  history.push('/');
 };
 export default { registerCustomer };

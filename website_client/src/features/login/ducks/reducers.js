@@ -1,5 +1,5 @@
 import types from './types';
-
+import _ from 'lodash';
 const INITIAL_STATE = {
   isSignedIn: null,
   userIdGoogle: null,
@@ -15,7 +15,14 @@ const loginReducer = (state = INITIAL_STATE, action) => {
       return { ...state, isSignedIn: false, userIdGoogle: null };
 
     case types.FETCH_USER:
-      return { ...state, userInfo: action.payload };
+      if (_.isEmpty(action.payload)) {
+        return { ...state, userInfo: {} };
+      } else {
+        return {
+          ...state,
+          userInfo: { ...state.userInfo, ...action.payload },
+        };
+      }
 
     default:
       return state;

@@ -33,4 +33,9 @@ const deleteCartItemLS = (id) => async (dispatch) => {
   await localStorage.setItem('cart', cartContent);
   history.push('/cart');
 };
-export default { initCartLS, addToCartLS, updateCartItemLS, deleteCartItemLS };
+export default {
+  initCartLS,
+  addToCartLS,
+  updateCartItemLS,
+  deleteCartItemLS,
+};

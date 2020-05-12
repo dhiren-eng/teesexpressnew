@@ -60,7 +60,9 @@ router.get('/api/customer/:emailId', (req, res, next) => {
       if (cDoc == 0) {
         res.status(404).jsonp('Customer not found!');
       } else {
-        collection.findOne({ usrEmail: req.params.emailId }, (err, doc) => {
+        console.log(req.params);
+        console.log(req.params.usrName);
+        collection.findOne({ logName: req.params.emailId }, (err, doc) => {
           if (err) {
             res.status(410).jsonp(err);
             next(err);

@@ -9,7 +9,7 @@ class GoogleAuthButton extends React.Component {
           .init({
             clientId:
               '981179991873-5vk2e1hhn3esqq2491i0keiva4ebvdsg.apps.googleusercontent.com',
-            scope: 'email',
+            scope: 'profile email',
             prompt: 'select_account',
           })
           .then(() => {
@@ -22,14 +22,14 @@ class GoogleAuthButton extends React.Component {
   };
   onAuthChange = (isSignedIn) => {
     console.log(isSignedIn);
-    if (!isSignedIn) {
-      this.props.googleSignIn();
-    } else if (isSignedIn) {
+    if (isSignedIn) {
+      this.props.googleSignIn(this.auth.currentUser.get().getId());
+    } else {
       this.props.googleSignOut();
     }
   };
   signIn = () => {
-    this.auth.signIn();
+    this.auth.signIn({ prompt: 'select_account', scope: 'profile email' });
   };
   signOut = () => {
     this.auth.signOut();
@@ -40,7 +40,7 @@ class GoogleAuthButton extends React.Component {
     } else if (this.props.isSignedIn === false) {
       return (
         <button onClick={this.signIn} className="btn btn-danger">
-          <i className="fab fa-google" aria-hidden="true"></i> Sign In with
+          <i className="fab fa-google" aria-hidden="true"></i> Sign in with
           Google
         </button>
       );

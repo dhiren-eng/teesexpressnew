@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registerCustomerOps } from './ducks';
+import { loginOperations } from '../login/ducks';
 import RegisterCustomerForm from './RegisterCustomerForm';
 const RegisterCustomerContainer = (props) => {
   const fetchErrorMessage = () => {
@@ -29,7 +30,10 @@ const RegisterCustomerContainer = (props) => {
   return (
     <div>
       {fetchErrorMessage()}
-      <RegisterCustomerForm registerCustomerAction={props.registerCustomer} />
+      <RegisterCustomerForm
+        registerCustomerAction={props.registerCustomer}
+        userLogin={props.userLogin}
+      />
     </div>
   );
 };
@@ -40,4 +44,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   registerCustomer: registerCustomerOps.registerCustomer,
+  userLogin: loginOperations.userLogin,
 })(RegisterCustomerContainer);
