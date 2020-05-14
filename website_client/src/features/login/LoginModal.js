@@ -47,8 +47,6 @@ class LoginModal extends React.Component {
         <button
           onClick={async () => {
             await this.props.userLogin(this.state.email, this.state.password);
-            console.log('LoginModal await complete');
-            console.log(this.props.fetchError);
             if (this.props.fetchError === null) {
               history.goBack();
             } else {

@@ -18,4 +18,5 @@ const deleteCartAc = (cart) => ({
   type: types.DELETE_CART,
   payload: cart,
 });
+
 export default { initCartAc, addToCartAc, updateCartAc, deleteCartAc };

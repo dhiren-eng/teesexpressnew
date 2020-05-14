@@ -8,6 +8,7 @@ const registerCustomer = (obj) => async (dispatch) => {
     usrName: obj.fullName,
     address: obj.address,
     phone: obj.mobileNumber,
+    status: 'Registered',
   };
   const response = await axios.post('/api/register', newObj).catch((error) => {
     dispatch(fetchErrorAction(error));

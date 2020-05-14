@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { categoryOperations } from './ducks';
 import { cartOperations } from '../cart/ducks';
 import CategoryDetailsComponent from './CategoryDetailsComponent';
+import { bindActionCreators } from 'redux';
 class CategoryDetailsContainer extends React.Component {
   componentDidMount() {
     this.props.fetchCategory(this.props.match.params.id);
@@ -11,9 +11,9 @@ class CategoryDetailsContainer extends React.Component {
   renderButton = (obj) => {
     return (
       <button
-        onClick={(e) => {
+        onClick={async (e) => {
           e.preventDefault();
-          this.props.addToCartLS(obj);
+          await this.props.addToCart(obj);
         }}
       >
         {' '}
@@ -43,7 +43,27 @@ const mapStateToProps = (state, ownProps) => {
     product: state.products[ownProps.match.params.id],
   };
 };
-export default connect(mapStateToProps, {
-  fetchCategory: categoryOperations.fetchCategory,
-  addToCartLS: cartOperations.addToCartLS,
-})(CategoryDetailsContainer);
+const mapDispatchToProps = (dispatch) => {
+  const login = JSON.parse(localStorage.getItem('login'));
+  if (login) {
+    return bindActionCreators(
+      {
+        fetchCategory: categoryOperations.fetchCategory,
+        addToCart: cartOperations.addToCart,
+      },
+      dispatch
+    );
+  } else {
+    return bindActionCreators(
+      {
+        fetchCategory: categoryOperations.fetchCategory,
+        addToCart: cartOperations.addToCartLS,
+      },
+      dispatch
+    );
+  }
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CategoryDetailsContainer);

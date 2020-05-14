@@ -62,7 +62,6 @@ class LoginButton extends React.Component {
       : this.signedIn();
   }
   componentDidUpdate() {
-    console.log('component did update');
     this.listenToLS();
   }
 }

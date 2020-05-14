@@ -2,16 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CategoryDetailsComponent from '../products/CategoryDetailsComponent';
 import { cartOperations } from './ducks';
+import { bindActionCreators } from 'redux';
 const EditCartItem = (props) => {
-  const updateCartItemButton = (id, obj) => {
-    console.log(id);
-    console.log(obj);
+  const updateCartItemButton = (obj) => {
     return (
       <button
         className="btn btn-primary"
         onClick={(e) => {
           e.preventDefault();
-          props.updateCartItem(id, obj);
+          props.updateCartItem(obj);
         }}
       >
         Update Cart Item
@@ -22,7 +21,7 @@ const EditCartItem = (props) => {
     return (
       <CategoryDetailsComponent
         item={props.cartItem}
-        button={(obj) => updateCartItemButton(props.match.params.id, obj)}
+        button={(obj) => updateCartItemButton(obj)}
         editCartItem="true"
       />
     );
@@ -41,6 +40,19 @@ const mapStateToProps = (state, ownProps) => {
     cartItem: item,
   };
 };
-export default connect(mapStateToProps, {
-  updateCartItem: cartOperations.updateCartItemLS,
-})(EditCartItem);
+
+const mapDispatchToProps = (dispatch) => {
+  const login = JSON.parse(localStorage.getItem('login'));
+  if (login) {
+    return bindActionCreators(
+      { updateCartItem: cartOperations.updateCartItem },
+      dispatch
+    );
+  } else {
+    return bindActionCreators(
+      { updateCartItem: cartOperations.updateCartItemLS },
+      dispatch
+    );
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EditCartItem);

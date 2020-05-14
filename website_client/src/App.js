@@ -23,7 +23,6 @@ class App extends React.Component {
           />
           <Route path="/cart" exact component={CartListContainer} />
           <Route path="/cart/edit/:id" exact component={EditCartItem} />
-          <Route path="/cart/delete/:id" exact component={DeleteCartItem} />
           <Route path="/loginModal" exact component={LoginModal} />
           <Route
             path="/registerCustomer"

@@ -12,19 +12,14 @@ router.get('/api/cart/:id', (req, res, next) => {
       res.status(410).jsonp(cErr);
       next(cErr);
     } else {
-      if (cDoc == 0) {
-        res.status(404).jsonp('Cart is empty!');
-      } else {
-        collection.find({ customerId: req.params.id }).toArray((err, doc) => {
-          if (err) {
-            res.status(410).jsonp(err);
-            next(err);
-          } else {
-            if (doc.length == 0) res.status(404).jsonp('Cart is empty!');
-            else res.status(200).jsonp(doc);
-          }
-        });
-      }
+      collection.find({ customerId: req.params.id }).toArray((err, doc) => {
+        if (err) {
+          res.status(410).jsonp(err);
+          next(err);
+        } else {
+          res.status(200).jsonp(doc);
+        }
+      });
     }
   });
 });
@@ -35,7 +30,7 @@ router.post('/api/cart', midWare.checkToken, (req, res, next) => {
   } else {
     let dataCollect = db.getDB().collection('cart');
     let ordInfo = {
-      itemId: req.body.id.toString(),
+      id: req.body.id.toString(),
       cateName: req.body.cateName,
       color: req.body.color,
       orderName: req.body.orderName,
@@ -81,7 +76,7 @@ router.put('/api/cart/:cId', midWare.checkToken, (req, res, next) => {
 
     let dataCollect = db.getDB().collection('cart');
     dataCollect.updateOne(
-      { customerId: req.params.cId, itemId: req.body.id },
+      { customerId: req.params.cId, id: req.body.id },
       ordInfo,
       (iErr, result) => {
         if (iErr) {
@@ -95,14 +90,11 @@ router.put('/api/cart/:cId', midWare.checkToken, (req, res, next) => {
   }
 });
 
-router.delete('/api/cart/:cId/:itemId', (req, res, next) => {
-  console.log(req.params.cId);
-  console.log(req.params.itemId);
-
+router.delete('/api/cart/:cId/:id', (req, res, next) => {
   db.getDB()
     .collection('cart')
     .deleteOne(
-      { customerId: req.params.cId, itemId: req.params.itemId },
+      { customerId: req.params.cId, id: req.params.id },
       (err, doc) => {
         if (err) {
           res.status(410).jsonp(err);

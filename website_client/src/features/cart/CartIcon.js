@@ -2,7 +2,12 @@ import React from 'react';
 import './CartIcon.css';
 import { connect } from 'react-redux';
 import { cartOperations } from './ducks';
+import _ from 'lodash';
 class CartIcon extends React.Component {
+  constructor(props) {
+    super(props);
+    this.propState = [0, 0];
+  }
   componentDidMount = () => {
     this.props.initCartLS();
   };
@@ -31,16 +36,40 @@ class CartIcon extends React.Component {
       </span>
     );
   }
-  componentDidUpdate() {
-    console.log('component did update');
+  componentDidUpdate = async (prevProps) => {
     this.listenToLS();
-  }
+    if (
+      !_.isEmpty(this.props.userInfo) &&
+      JSON.stringify(this.props.userInfo) !== JSON.stringify(prevProps.userInfo)
+    ) {
+      await this.props.initCart();
+      this.propState.push(1);
+      this.propState.shift();
+    } else if (
+      !_.isEmpty(this.props.userInfo) &&
+      this.props.cart.length !== prevProps.cart.length &&
+      this.propState[0] == 1
+    ) {
+      await this.props.initCart();
+      this.propState.push(1);
+      this.propState.shift();
+    } else if (
+      _.isEmpty(this.props.userInfo) &&
+      JSON.stringify(this.props.userInfo) !== JSON.stringify(prevProps.userInfo)
+    ) {
+      await this.props.initCartLS();
+      this.propState = [0, 0];
+    }
+    console.log(this.propState);
+  };
 }
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    userInfo: state.login.userInfo,
   };
 };
 export default connect(mapStateToProps, {
   initCartLS: cartOperations.initCartLS,
+  initCart: cartOperations.initCart,
 })(CartIcon);
