@@ -6,7 +6,6 @@ import Homepage from './features/home/Homepage';
 import CartListContainer from './features/cart/CartListContainer';
 import CategoryDetailsContainer from './features/products/CategoryDetailsContainer';
 import EditCartItem from './features/cart/EditCartItem';
-import DeleteCartItem from './features/cart/DeleteCartItem';
 import LoginModal from './features/login/LoginModal';
 import RegisterCustomerContainer from './features/register/RegisterCustomerContainer';
 class App extends React.Component {

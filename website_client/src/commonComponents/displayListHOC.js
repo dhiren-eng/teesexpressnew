@@ -1,15 +1,15 @@
 import React from 'react';
 const displayListHOC = (ItemComponent) => (props) => {
   return (
-    <div>
+    <React.Fragment>
       {props.itemList.map((element) => {
         return (
-          <div key={element.id}>
+          <React.Fragment key={element.id}>
             <ItemComponent item={element} itemButtons={props.listItemButtons} />
-          </div>
+          </React.Fragment>
         );
       })}
-    </div>
+    </React.Fragment>
   );
 };
 

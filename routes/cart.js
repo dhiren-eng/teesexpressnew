@@ -34,7 +34,7 @@ router.post('/api/cart', midWare.checkToken, (req, res, next) => {
       cateName: req.body.cateName,
       color: req.body.color,
       orderName: req.body.orderName,
-      printPerUnit: req.body.printPerUnit,
+      pricePerUnit: req.body.pricePerUnit,
       printingOn: req.body.printingOn,
       sizes: req.body.sizes,
       totalPriceInfo: req.body.totalPriceInfo,
