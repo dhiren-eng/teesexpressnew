@@ -60,6 +60,7 @@ class LoginModal extends React.Component {
               );
             }
           }}
+          type="submit"
         >
           Login
         </button>

@@ -1,5 +1,6 @@
 import history from '../../../history';
 import axios from '../../../backendApiCall/axiosInstance';
+import actions from './actions';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
 const registerCustomer = (obj) => async (dispatch) => {
   const newObj = {
@@ -16,4 +17,18 @@ const registerCustomer = (obj) => async (dispatch) => {
   console.log(response);
   history.push('/');
 };
-export default { registerCustomer };
+const updateCustomer = (obj) => async (dispatch) => {
+  const login = JSON.parse(localStorage.getItem('login'));
+  const newObj = { usrName: '', shippingAddress: '' };
+  newObj.usrName = obj.fullName;
+  newObj.shippingAddress = obj.address;
+  if (login) {
+    await axios
+      .put(`/api/customer/${login.usrEmail}`, newObj)
+      .catch((error) => {
+        dispatch(fetchErrorAction(error));
+      });
+    dispatch(actions.updateCust(newObj));
+  }
+};
+export default { registerCustomer, updateCustomer };

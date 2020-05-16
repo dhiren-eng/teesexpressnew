@@ -1,5 +1,7 @@
 import types from './types';
+import customerTypes from '../../register/ducks/types';
 import _ from 'lodash';
+import actions from '../../register/ducks/actions';
 const INITIAL_STATE = {
   isSignedIn: null,
   userIdGoogle: null,
@@ -23,6 +25,16 @@ const loginReducer = (state = INITIAL_STATE, action) => {
           userInfo: { ...state.userInfo, ...action.payload },
         };
       }
+
+    case customerTypes.UPDATE_CUSTOMER:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          shippingAddress: action.payload.shippingAddress,
+          usrName: action.payload.usrName,
+        },
+      };
 
     default:
       return state;

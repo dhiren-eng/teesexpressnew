@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { registerCustomerOps } from './ducks';
+import { customerOperations } from './ducks';
 import { loginOperations } from '../login/ducks';
 import RegisterCustomerForm from './RegisterCustomerForm';
+import { Field } from 'redux-form';
 const RegisterCustomerContainer = (props) => {
+  const renderButton = () => {
+    return <button type="submit">Register</button>;
+  };
   const fetchErrorMessage = () => {
     if (props.fetchError) {
       var message;
@@ -33,6 +37,7 @@ const RegisterCustomerContainer = (props) => {
       <RegisterCustomerForm
         registerCustomerAction={props.registerCustomer}
         userLogin={props.userLogin}
+        renderButton={renderButton}
       />
     </div>
   );
@@ -43,6 +48,6 @@ const mapStateToProps = (state) => {
   };
 };
 export default connect(mapStateToProps, {
-  registerCustomer: registerCustomerOps.registerCustomer,
+  registerCustomer: customerOperations.registerCustomer,
   userLogin: loginOperations.userLogin,
 })(RegisterCustomerContainer);

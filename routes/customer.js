@@ -76,6 +76,27 @@ router.get('/api/customer/:emailId', (req, res, next) => {
   });
 });
 
+router.put('/api/customer/:emailId', (req, res, next) => {
+  let custInfo = {
+    $set: {
+      usrName: req.body.usrName,
+      shippingAddress: req.body.shippingAddress,
+      updatedOn: new Date().toString(),
+    },
+  };
+  let dataCollect = db.getDB().collection('customer');
+  dataCollect.updateOne(
+    { logName: req.params.emailId },
+    custInfo,
+    (iErr, result) => {
+      if (iErr) {
+        res.status(410).jsonp(iErr);
+        next(iErr);
+      } else res.status(201).jsonp('Customer updated successfully!');
+    }
+  );
+});
+
 router.post('/api/login', (req, res, next) => {
   if (!req.body.usrName || !req.body.yrPass) {
     res.status(400).jsonp('Incomplete information');

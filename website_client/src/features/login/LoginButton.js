@@ -22,7 +22,7 @@ class LoginButton extends React.Component {
         ></Link>
         <ul className="dropdown-menu dropdown-menu-right">
           <li>
-            <Link to="#">My Profile</Link>
+            <Link to="/profile">My Profile</Link>
           </li>
           <li className="divider"></li>
           <li>

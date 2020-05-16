@@ -123,4 +123,32 @@ router.delete('/api/category/:id', midWare.checkToken, (req, res, next) => {
     });
 });
 
+router.get('/api/category/search/:keyword', (req, res, next) => {
+  let dataCollect = db.getDB().collection('category');
+  dataCollect.countDocuments({}, (err, doc) => {
+    if (err) {
+      res.status(410).jsonp(err);
+      next(err);
+    } else {
+      if (doc) {
+        dataCollect.createIndex({ cateName: 'text' });
+        dataCollect
+          .find({ $text: { $search: req.params.keyword } })
+          .sort({ cateName: 1 })
+          .toArray((err, doc) => {
+            if (err) {
+              res.status(410).jsonp(err);
+              next(err);
+            } else {
+              if (doc.length == 0) res.status(404).jsonp('No category found!');
+              else res.status(200).jsonp(doc);
+            }
+          });
+      } else {
+        res.status(404).jsonp('No category found!');
+      }
+    }
+  });
+});
+
 module.exports = router;

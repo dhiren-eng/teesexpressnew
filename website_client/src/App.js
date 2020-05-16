@@ -8,6 +8,8 @@ import CategoryDetailsContainer from './features/products/CategoryDetailsContain
 import EditCartItem from './features/cart/EditCartItem';
 import LoginModal from './features/login/LoginModal';
 import RegisterCustomerContainer from './features/register/RegisterCustomerContainer';
+import Profile from './features/register/Profile';
+import AddressModal from './features/register/AddressModal';
 class App extends React.Component {
   render() {
     return (
@@ -28,6 +30,8 @@ class App extends React.Component {
             exact
             component={RegisterCustomerContainer}
           />
+          <Route path="/profile" exact component={Profile} />
+          <Route path="/addressModal/:address" exact component={AddressModal} />
         </div>
       </Router>
     );
