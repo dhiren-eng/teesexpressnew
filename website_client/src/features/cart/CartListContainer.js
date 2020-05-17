@@ -5,6 +5,7 @@ import displayListHOC from '../../commonComponents/displayListHOC';
 import { Link } from 'react-router-dom';
 import { cartOperations } from './ducks';
 import { bindActionCreators } from 'redux';
+import CheckoutButton from './CheckoutButton';
 const CartListComponent = displayListHOC(CartItem);
 const CartListContainer = (props) => {
   const listItemButtons = (id) => {
@@ -70,9 +71,7 @@ const CartListContainer = (props) => {
           </tbody>
         </table>
         <div style={{ textAlign: 'center' }}>
-          <button className="btn btn-danger">
-            Place order with advance payment
-          </button>
+          <CheckoutButton />
         </div>
       </div>
     );

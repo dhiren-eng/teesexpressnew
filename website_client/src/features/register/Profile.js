@@ -6,13 +6,23 @@ import AddressItem from './AddressItem';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import { customerOperations } from './ducks';
 import { Link } from 'react-router-dom';
+import { Field } from 'redux-form';
 let AddressList = displayListHOC(AddressItem);
+var fieldOnChange;
 const Profile = (props) => {
-  const listItemButtons = (address) => {
-    console.log(address);
+  const getFieldOnChange = (method) => {
+    fieldOnChange = method;
+  };
+  const editAddress = (address) => {
     return (
-      <div className="float-right">
-        <Link to={`/addressModal/${address}`} className="btn btn-primary">
+      <React.Fragment>
+        {address}
+        <br />
+        <br />
+        <Link
+          to={`/addressModal/${address}`}
+          className="btn btn-primary card-link"
+        >
           Edit
         </Link>
         <button
@@ -21,14 +31,36 @@ const Profile = (props) => {
           onClick={async () => {
             var arr = props.userInfo.shippingAddress;
             arr = arr.filter((element) => element != address);
-            const newObj = props.form.values;
+            var newObj = props.form.values;
             newObj.address = arr;
             await props.updateCustomer(newObj);
           }}
         >
           Delete
         </button>
-      </div>
+      </React.Fragment>
+    );
+  };
+  const listItemButtons = (address, mode) => {
+    console.log(fieldOnChange);
+    console.log(address);
+    return (
+      <React.Fragment>
+        {mode === 'selectAddress' ? (
+          <React.Fragment>
+            <Field
+              name="selectedAddress"
+              type="radio"
+              value={address}
+              component={fieldOnChange}
+            />{' '}
+            <label htmlFor={address}>{address}</label>
+          </React.Fragment>
+        ) : (
+          <div></div>
+        )}
+        {mode === 'editProfile' ? editAddress(address) : <div></div>}
+      </React.Fragment>
     );
   };
   if (!_.isEmpty(props.userInfo)) {
@@ -41,27 +73,30 @@ const Profile = (props) => {
     obj.Email = props.userInfo.logName;
     obj.mobileNumber = props.userInfo.phone;
     obj.fullName = props.userInfo.usrName;
+    var newMode;
+    if (props.mode) {
+      newMode = 'selectAddress';
+    } else {
+      newMode = 'editProfile';
+    }
     return (
       <div className="container-fluid p-3">
         <h2>
-          <u style={{ textDecorationSkipInk: 'none' }}>My Profile</u>
+          <u style={{ textDecorationSkipInk: 'none' }}>
+            {newMode === 'selectAddress' ? 'Shipping Details' : 'My Profile'}
+          </u>
         </h2>
         <br />
         <RegisterCustomerForm
           initialValues={obj}
-          mode="edit"
-          removePasswordForm="true"
-        />
-        <br />
-        <br />
-        <strong>SAVED ADDRESSES :</strong>
-        <br />
-        <br />
-        <AddressList
-          itemList={props.userInfo.shippingAddress}
-          listItemButtons={(address) => listItemButtons(address)}
-        />
-        <br />
+          mode={newMode}
+          getFieldOnChange={getFieldOnChange}
+        >
+          <AddressList
+            itemList={props.userInfo.shippingAddress}
+            listItemButtons={(address) => listItemButtons(address, newMode)}
+          />
+        </RegisterCustomerForm>
         <button type="button" className="btn btn-primary">
           Add Address
         </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, reduxForm, unregisterField } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import axiosInstance from '../../backendApiCall/axiosInstance';
 import SetCustomerPasswordForm from './SetCustomerPasswordForm';
 
@@ -8,7 +8,7 @@ class RegisterCustomerForm extends React.Component {
     if (visited && error) {
       return (
         <div
-          class="alert alert-danger alert-dismissible"
+          className="alert alert-danger alert-dismissible"
           style={{
             fontSize: '10px',
             lineHeight: '2px',
@@ -25,12 +25,29 @@ class RegisterCustomerForm extends React.Component {
   renderInputt = ({ input, label, meta, type, disabled }) => {
     console.log(input);
     return (
-      <div>
-        <label>{label}</label>
-        <input {...input} autoComplete="off" type={type} disabled={disabled} />
-        <br />
+      <React.Fragment>
+        <label>
+          <strong>{label}</strong>
+        </label>
+        {type === 'radio' ? (
+          <input
+            {...input}
+            autoComplete="off"
+            type={type}
+            disabled={disabled}
+          />
+        ) : (
+          <input
+            {...input}
+            autoComplete="off"
+            type={type}
+            disabled={disabled}
+            className="form-control w-75 border-info"
+          />
+        )}
+        {type === 'radio' ? <React.Fragment></React.Fragment> : <br />}
         {this.renderError(meta)}
-      </div>
+      </React.Fragment>
     );
   };
   onSubmitt = async (formValues) => {
@@ -42,7 +59,8 @@ class RegisterCustomerForm extends React.Component {
     await this.props.userLogin(formValues.Email, formValues.password);
   };
   render() {
-    console.log(this.props.mode === 'edit');
+    console.log(this.props.children);
+    this.props.getFieldOnChange(this.renderInputt);
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
         <Field
@@ -50,14 +68,17 @@ class RegisterCustomerForm extends React.Component {
           component={this.renderInputt}
           label="Email: "
           type="text"
-          disabled={this.props.mode === 'edit'}
+          disabled={
+            this.props.mode === 'editProfile' ||
+            this.props.mode === 'selectAddress'
+          }
         />
         <Field
           name="mobileNumber"
           component={this.renderInputt}
           label="Mobile Number: "
           type="number"
-          disabled={this.props.mode === 'edit'}
+          disabled={this.props.mode === 'editProfile'}
         />
         <Field
           name="fullName"
@@ -65,7 +86,24 @@ class RegisterCustomerForm extends React.Component {
           type="text"
           label="Full Name: "
         />
-        {this.props.removePasswordForm ? (
+        {this.props.mode === 'selectAddress' && (
+          <div>
+            <strong>SELECT ADDRESS :</strong>
+            <br />
+            <br />
+            {this.props.children}
+          </div>
+        )}
+        {this.props.mode === 'editProfile' && (
+          <div>
+            <br />
+            <br />
+            <strong>SAVED ADDRESSES</strong> <br />
+            <br />
+            {this.props.children}
+          </div>
+        )}
+        {this.props.mode ? (
           <React.Fragment></React.Fragment>
         ) : (
           <SetCustomerPasswordForm renderInput={this.renderInputt} />
@@ -111,6 +149,8 @@ const validate = (formValues) => {
 
   return errors;
 };
-export default reduxForm({ form: 'registerPage', validate })(
-  RegisterCustomerForm
-);
+export default reduxForm({
+  form: 'registerPage',
+  destroyOnUnmount: false,
+  validate,
+})(RegisterCustomerForm);

@@ -2,11 +2,13 @@ import React from 'react';
 import Modal11 from '../../Modal11';
 import { customerOperations } from './ducks';
 import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
 class AddressModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       address: props.match.params.address,
+      fullName: props.name,
     };
   }
   handleChange = (e) => {
@@ -31,13 +33,18 @@ class AddressModal extends React.Component {
 
         <button
           type="submit"
+          className="btn btn-primary"
           onClick={async () => {
             var arr = this.props.userInfo.shippingAddress;
             arr = arr.filter(
               (element) => element != this.props.match.params.address
             );
             arr.push(this.state.address);
-            await this.props.updateCustomer({ address: arr });
+            console.log(this.state.fullName);
+            await this.props.updateCustomer({
+              fullName: this.state.fullName,
+              address: arr,
+            });
           }}
         >
           Save Changes
@@ -46,12 +53,15 @@ class AddressModal extends React.Component {
     );
   };
   render() {
-    console.log(this.props.match.params.address);
     return <Modal11 modalContent={() => this.modalContent()} />;
   }
 }
 const mapStateToProps = (state) => {
+  const selector = formValueSelector('registerPage');
+  const fullName1 = selector(state, 'fullName');
+  console.log(fullName1);
   return {
+    name: fullName1,
     userInfo: state.login.userInfo,
   };
 };
