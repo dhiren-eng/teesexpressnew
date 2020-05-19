@@ -42,14 +42,12 @@ const Profile = (props) => {
     );
   };
   const listItemButtons = (address, mode) => {
-    console.log(fieldOnChange);
-    console.log(address);
     return (
       <React.Fragment>
         {mode === 'selectAddress' ? (
           <React.Fragment>
             <Field
-              name="selectedAddress"
+              name="deliveryAddress"
               type="radio"
               value={address}
               component={fieldOnChange}
@@ -61,6 +59,13 @@ const Profile = (props) => {
         )}
         {mode === 'editProfile' ? editAddress(address) : <div></div>}
       </React.Fragment>
+    );
+  };
+  const addAddress = () => {
+    return (
+      <Link to="/addressModal" className="btn btn-primary">
+        Add Address
+      </Link>
     );
   };
   if (!_.isEmpty(props.userInfo)) {
@@ -91,15 +96,17 @@ const Profile = (props) => {
           initialValues={obj}
           mode={newMode}
           getFieldOnChange={getFieldOnChange}
+          renderButton={props.renderButton}
+          cart={props.cart}
+          addOrder={props.addOrder}
+          paymentDetailsForm={props.paymentDetailsForm}
+          addAddress={addAddress}
         >
           <AddressList
             itemList={props.userInfo.shippingAddress}
             listItemButtons={(address) => listItemButtons(address, newMode)}
           />
         </RegisterCustomerForm>
-        <Link to="/addressModal" className="btn btn-primary">
-          Add Address
-        </Link>
       </div>
     );
   } else {

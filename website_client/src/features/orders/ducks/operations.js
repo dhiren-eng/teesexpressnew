@@ -10,10 +10,12 @@ const addOrder = (obj, cart) => async (dispatch) => {
     customerId = login.customerId;
     newObj = { ...obj, customerId };
   } else {
+    var arr = [];
+    arr.push(obj.address);
     const newCustomer = {
       usrEmail: obj.email,
       usrName: obj.fullName,
-      address: obj.address,
+      address: arr,
       phone: obj.phone,
       status: 'Guest',
     };
@@ -33,19 +35,23 @@ const addOrder = (obj, cart) => async (dispatch) => {
         .catch((error) => {
           dispatch(fetchErrorAction(error));
         });
-      customerId = response._id;
+      customerId = response.data._id;
       newObj = { ...obj, customerId };
     }
   }
   await axiosInstance.post('/api/order', newObj);
   const response = await axiosInstance.get(`/api/order/${newObj.email}`);
-  cart.forEach(async (element) => {
-    await axiosInstance
-      .delete(`/api/cart/${customerId}/${element.id}`)
-      .catch((error) => {
-        dispatch(fetchErrorAction(error));
-      });
-  });
+  if (login) {
+    cart.forEach(async (element) => {
+      await axiosInstance
+        .delete(`/api/cart/${customerId}/${element.id}`)
+        .catch((error) => {
+          dispatch(fetchErrorAction(error));
+        });
+    });
+  } else {
+    localStorage.removeItem('cart');
+  }
   dispatch(actions.fetchOrders(response.data));
   dispatch(cartActions.initCartAc([]));
 };

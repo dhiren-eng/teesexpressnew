@@ -17,9 +17,9 @@ router.post('/api/register', (req, res, next) => {
       logName: req.body.usrEmail,
       phone: req.body.phone,
       passCode: passCode,
-      address: req.body.address,
-      status: req.body.status,
-      fullName: req.body.usrName,
+      shippingAddress: req.body.address,
+      regStatus: req.body.status,
+      usrName: req.body.usrName,
       createdOn: new Date().toString(),
       updatedOn: new Date().toString(),
       accStatus: true,
@@ -27,7 +27,7 @@ router.post('/api/register', (req, res, next) => {
 
     const collection = db.getDB().collection('customer');
 
-    collection.countDocuments({ usrEmail: req.body.usrEmail }, (err, doc) => {
+    collection.countDocuments({ logName: req.body.usrEmail }, (err, doc) => {
       if (err) {
         res.status(410).jsonp(err);
         next(err);

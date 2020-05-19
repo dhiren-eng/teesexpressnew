@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import axiosInstance from '../../backendApiCall/axiosInstance';
 import SetCustomerPasswordForm from './SetCustomerPasswordForm';
-
+import calTotalPrice from '../../utilities/calTotalPrice';
 class RegisterCustomerForm extends React.Component {
   renderError = ({ error, touched, visited }) => {
     if (visited && error) {
@@ -50,11 +50,26 @@ class RegisterCustomerForm extends React.Component {
     );
   };
   onSubmitt = async (formValues) => {
-    var addressArray = [];
-    addressArray.push(formValues.address);
-    formValues.address = addressArray;
-    await this.props.registerCustomerAction(formValues);
-    await this.props.userLogin(formValues.Email, formValues.password);
+    if (
+      this.props.mode === 'orderAsGuest' ||
+      this.props.mode === 'selectAddress'
+    ) {
+      var obj = {
+        items: this.props.cart,
+        fullName: formValues.fullName,
+        phone: formValues.mobileNumber,
+        email: formValues.Email,
+        address: formValues.deliveryAddress,
+        priceInfo: calTotalPrice(this.props.cart),
+      };
+      await this.props.addOrder(obj, this.props.cart);
+    } else {
+      var addressArray = [];
+      addressArray.push(formValues.address);
+      formValues.address = addressArray;
+      await this.props.registerCustomerAction(formValues);
+      await this.props.userLogin(formValues.Email, formValues.password);
+    }
   };
   render() {
     if (this.props.getFieldOnChange) {
@@ -110,11 +125,13 @@ class RegisterCustomerForm extends React.Component {
             {this.props.children}
           </div>
         )}
+        {this.props.addAddress && this.props.addAddress()}
         {this.props.mode ? (
           <React.Fragment></React.Fragment>
         ) : (
           <SetCustomerPasswordForm renderInput={this.renderInputt} />
         )}
+        {this.props.paymentDetailsForm && this.props.paymentDetailsForm()}
         {this.props.renderButton ? (
           this.props.renderButton()
         ) : (
@@ -135,8 +152,8 @@ const validate = (formValues) => {
   if (!formValues.fullName) {
     errors.fullName = 'Field cannot be empty';
   }
-  if (!formValues.address) {
-    errors.address = 'Field cannot be empty';
+  if (!formValues.deliveryAddress) {
+    errors.deliveryAddress = 'Field cannot be empty';
   }
   if (!formValues.password) {
     errors.password = 'Field cannot be empty';
