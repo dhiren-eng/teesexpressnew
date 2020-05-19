@@ -11,6 +11,7 @@ import PlaceOrderPage from './features/orders/PlaceOrderPage';
 import AddressModal from './features/register/AddressModal';
 import LoginModal from './features/login/LoginModal';
 import EditCartItem from './features/cart/EditCartItem';
+import MyOrders from './features/orders/MyOrders';
 class App extends React.Component {
   render() {
     return (
@@ -42,6 +43,7 @@ class App extends React.Component {
             component={AddressModal}
           />
           <Route path="/placeOrderPage" exact component={PlaceOrderPage} />
+          <Route path="/myOrders" exact component={MyOrders} />
         </div>
       </Router>
     );

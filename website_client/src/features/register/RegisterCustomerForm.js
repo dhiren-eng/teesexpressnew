@@ -65,7 +65,6 @@ class RegisterCustomerForm extends React.Component {
       await this.props.addOrder(obj, this.props.cart);
     } else {
       var addressArray = [];
-      addressArray.push(formValues.address);
       formValues.address = addressArray;
       await this.props.registerCustomerAction(formValues);
       await this.props.userLogin(formValues.Email, formValues.password);

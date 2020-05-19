@@ -1,8 +1,8 @@
 import types from './types';
-const fetchOrders = (obj) => {
+const fetchOrders = (arr) => {
   return {
     type: types.FETCH_ORDERS,
-    payload: obj,
+    payload: arr,
   };
 };
 export default { fetchOrders };

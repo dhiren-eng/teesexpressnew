@@ -1,5 +1,6 @@
 import React from 'react';
 const displayListHOC = (ItemComponent) => (props) => {
+  console.log(props.itemList);
   return (
     <React.Fragment>
       {props.itemList.map((element) => {

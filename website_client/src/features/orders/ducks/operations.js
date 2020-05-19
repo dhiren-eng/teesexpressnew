@@ -55,4 +55,13 @@ const addOrder = (obj, cart) => async (dispatch) => {
   dispatch(actions.fetchOrders(response.data));
   dispatch(cartActions.initCartAc([]));
 };
-export default { addOrder };
+const fetchOrders = (email) => async (dispatch) => {
+  console.log(email);
+  const response = await axiosInstance.get(`/api/order/${email}`);
+  console.log(typeof response.data);
+  console.log(response);
+  if (response) {
+    dispatch(actions.fetchOrders(response.data));
+  }
+};
+export default { addOrder, fetchOrders };

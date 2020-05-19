@@ -26,7 +26,7 @@ class LoginButton extends React.Component {
           </li>
           <li className="divider"></li>
           <li>
-            <Link to="#">My Orders</Link>
+            <Link to="/myOrders">My Orders</Link>
           </li>
           <li className="divider"></li>
           <li>

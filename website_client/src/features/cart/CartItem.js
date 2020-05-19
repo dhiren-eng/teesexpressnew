@@ -37,7 +37,7 @@ const CartItem = (props) => {
           <br />
           <br />
         </div>
-        {props.itemButtons(itemId)}
+        {props.itemButtons && props.itemButtons(itemId)}
       </div>
     </div>
   );
