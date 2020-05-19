@@ -25,6 +25,7 @@ class Modal1 extends React.Component {
           history.goBack();
         }}
         center
+        blockScroll={false}
       >
         <div className="container-fluid">
           <div className="modal-body">
@@ -48,7 +49,7 @@ class Modal1 extends React.Component {
           </div>
         </div>
       </Modal>,
-      document.querySelector('#modal')
+      document.querySelector(this.props.domNode)
     );
   }
 }

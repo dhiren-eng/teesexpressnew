@@ -6,7 +6,11 @@ import RegisterCustomerForm from './RegisterCustomerForm';
 import { Field } from 'redux-form';
 const RegisterCustomerContainer = (props) => {
   const renderButton = () => {
-    return <button type="submit">Register</button>;
+    return (
+      <button type="submit" className="btn btn-primary">
+        Register
+      </button>
+    );
   };
   const fetchErrorMessage = () => {
     if (props.fetchError) {
@@ -32,7 +36,11 @@ const RegisterCustomerContainer = (props) => {
     }
   };
   return (
-    <div>
+    <div class="container-fluid p-3">
+      <h3>
+        <u style={{ textDecorationSkipInk: 'none' }}>Sign Up in TeesExpress</u>
+      </h3>
+      <br />
       {fetchErrorMessage()}
       <RegisterCustomerForm
         registerCustomerAction={props.registerCustomer}

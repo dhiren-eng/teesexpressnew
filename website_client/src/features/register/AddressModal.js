@@ -3,6 +3,7 @@ import Modal11 from '../../Modal11';
 import { customerOperations } from './ducks';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
+import history from '../../history';
 class AddressModal extends React.Component {
   constructor(props) {
     super(props);
@@ -22,29 +23,38 @@ class AddressModal extends React.Component {
   modalContent = () => {
     return (
       <div>
-        <label htmlFor="editAddress">Edit Address : </label>
+        <label htmlFor="editAddress" style={{ display: 'block' }}>
+          {this.props.match.params.address
+            ? 'Edit Address : '
+            : 'New Address : '}
+        </label>
         <textarea
           rows="7"
           columns="50"
           name="address"
           value={this.state.address}
           onChange={this.handleChange}
+          style={{ display: 'block' }}
         />
-
+        <br />
         <button
           type="submit"
           className="btn btn-primary"
           onClick={async () => {
             var arr = this.props.userInfo.shippingAddress;
-            arr = arr.filter(
-              (element) => element != this.props.match.params.address
-            );
-            arr.push(this.state.address);
-            console.log(this.state.fullName);
+            if (this.props.match.params.address) {
+              arr = arr.filter(
+                (element) => element != this.props.match.params.address
+              );
+              arr.push(this.state.address);
+            } else {
+              arr.push(this.state.address);
+            }
             await this.props.updateCustomer({
               fullName: this.state.fullName,
               address: arr,
             });
+            history.goBack();
           }}
         >
           Save Changes

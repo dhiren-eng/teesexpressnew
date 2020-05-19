@@ -8,6 +8,12 @@ const CheckoutButton = () => {
         Place order with advance payment
       </Link>
     );
+  } else {
+    return (
+      <Link to="/loginModal/showOrderOptions" className="btn btn-danger">
+        Place order with advance payment
+      </Link>
+    );
   }
 };
 export default CheckoutButton;

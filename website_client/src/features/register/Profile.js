@@ -97,9 +97,9 @@ const Profile = (props) => {
             listItemButtons={(address) => listItemButtons(address, newMode)}
           />
         </RegisterCustomerForm>
-        <button type="button" className="btn btn-primary">
+        <Link to="/addressModal" className="btn btn-primary">
           Add Address
-        </button>
+        </Link>
       </div>
     );
   } else {

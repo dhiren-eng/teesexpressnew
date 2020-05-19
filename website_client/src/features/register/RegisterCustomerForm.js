@@ -23,7 +23,6 @@ class RegisterCustomerForm extends React.Component {
     }
   };
   renderInputt = ({ input, label, meta, type, disabled }) => {
-    console.log(input);
     return (
       <React.Fragment>
         <label>
@@ -54,13 +53,13 @@ class RegisterCustomerForm extends React.Component {
     var addressArray = [];
     addressArray.push(formValues.address);
     formValues.address = addressArray;
-    console.log(formValues);
     await this.props.registerCustomerAction(formValues);
     await this.props.userLogin(formValues.Email, formValues.password);
   };
   render() {
-    console.log(this.props.children);
-    this.props.getFieldOnChange(this.renderInputt);
+    if (this.props.getFieldOnChange) {
+      this.props.getFieldOnChange(this.renderInputt);
+    }
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
         <Field
@@ -86,6 +85,14 @@ class RegisterCustomerForm extends React.Component {
           type="text"
           label="Full Name: "
         />
+        {this.props.mode === 'orderAsGuest' && (
+          <Field
+            name="deliveryAddress"
+            component={this.renderInputt}
+            type="text"
+            label="Delivery Address: "
+          />
+        )}
         {this.props.mode === 'selectAddress' && (
           <div>
             <strong>SELECT ADDRESS :</strong>
@@ -118,7 +125,6 @@ class RegisterCustomerForm extends React.Component {
   }
 }
 const validate = (formValues) => {
-  console.log(formValues);
   const errors = {};
   if (!formValues.Email) {
     errors.Email = 'Field cannot be empty';
@@ -138,7 +144,6 @@ const validate = (formValues) => {
   if (!formValues.confirmPassword) {
     errors.confirmPassword = 'Field cannot be empty';
   }
-  console.log(formValues.password && formValues.confirmPassword);
   if (formValues.password && formValues.confirmPassword) {
     console.log(formValues.password.localeCompare(formValues.confirmPassword));
     if (formValues.password.localeCompare(formValues.confirmPassword) != 0) {
@@ -146,7 +151,6 @@ const validate = (formValues) => {
       errors.confirmPassword = 'Passwords do not match !';
     }
   }
-
   return errors;
 };
 export default reduxForm({

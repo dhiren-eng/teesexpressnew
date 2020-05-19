@@ -14,7 +14,6 @@ const registerCustomer = (obj) => async (dispatch) => {
   const response = await axios.post('/api/register', newObj).catch((error) => {
     dispatch(fetchErrorAction(error));
   });
-  console.log(response);
   history.push('/');
 };
 const updateCustomer = (obj) => async (dispatch) => {

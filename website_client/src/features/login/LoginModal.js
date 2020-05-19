@@ -30,6 +30,23 @@ class LoginModal extends React.Component {
   upperPart = () => {
     return (
       <div>
+        {this.props.match.params.orderOption ? (
+          <p
+            class="alert alert-info alert-dismissible"
+            style={{
+              fontSize: '12px',
+              lineHeight: '2px',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              display: 'inline-block',
+            }}
+          >
+            Sign in will save your effort by automatically loading your shipping
+            information
+          </p>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
         <Input
           title={'EMail '}
           name={'email'}
@@ -48,7 +65,9 @@ class LoginModal extends React.Component {
           onClick={async () => {
             await this.props.userLogin(this.state.email, this.state.password);
             if (this.props.fetchError === null) {
-              history.goBack();
+              this.props.match.params.orderOption
+                ? history.push('/placeOrderPage')
+                : history.goBack();
             } else {
               this.setState(
                 (prevState) => ({
@@ -62,7 +81,7 @@ class LoginModal extends React.Component {
           }}
           type="submit"
         >
-          Login
+          Sign In
         </button>
         <br />
         <br />
@@ -77,6 +96,7 @@ class LoginModal extends React.Component {
             style={{
               fontSize: '10px',
               lineHeight: '2px',
+              textAlign: 'center',
               verticalAlign: 'middle',
               display: 'inline-block',
             }}
@@ -88,17 +108,48 @@ class LoginModal extends React.Component {
     );
   };
   lowerPart = () => {
-    return (
-      <Link to="/registerCustomer" className="btn btn-primary">
-        Register
-      </Link>
-    );
+    if (this.props.match.params.orderOption) {
+      return (
+        <React.Fragment>
+          <button
+            className="btn btn-danger"
+            onClick={() => history.push('/placeOrderPage')}
+          >
+            Continue placing order without registering
+          </button>
+          <br />
+          <br />
+          <br />
+          <p
+            class="alert alert-info alert-dismissible"
+            style={{
+              fontSize: '12px',
+              verticalAlign: 'middle',
+              textAlign: 'center',
+              display: 'inline-block',
+            }}
+          >
+            You can place order as a guest without registering and register
+            later using your customer ID generated after placing order. A
+            dedicated assistant will be assigned for your order and will contact
+            you shortly after your order is placed{' '}
+          </p>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <Link to="/registerCustomer" className="btn btn-primary">
+          Register
+        </Link>
+      );
+    }
   };
   render() {
     return (
       <Modal1
         upperPart={() => this.upperPart()}
         lowerPart={() => this.lowerPart()}
+        domNode="#modal"
       />
     );
   }

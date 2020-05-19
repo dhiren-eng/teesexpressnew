@@ -1,5 +1,4 @@
 import types from './types';
-import CartItem from '../CartItem';
 const initCartAc = (cart) => {
   return {
     type: types.INIT_CART,

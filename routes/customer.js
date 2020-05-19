@@ -6,17 +6,20 @@ const db = require('../modules/dbConnect');
 const config = require('../modules/secret');
 
 router.post('/api/register', (req, res, next) => {
-  if (!req.body.usrEmail || !req.body.usrName || !req.body.yrPass) {
+  if (!req.body.usrEmail || !req.body.usrName || !req.body.phone) {
     res.status(400).jsonp('Incomplete information');
   } else {
     var BCRYPT_SALT_ROUNDS = 12;
+    let passCode = '';
+    if (req.body.yrPass)
+      passCode = bcrypt.hashSync(req.body.yrPass, BCRYPT_SALT_ROUNDS);
     let regData = {
       logName: req.body.usrEmail,
-      passCode: bcrypt.hashSync(req.body.yrPass, BCRYPT_SALT_ROUNDS),
-      usrName: req.body.usrName,
       phone: req.body.phone,
-      shippingAddress: req.body.address,
-      regStatus: req.body.status,
+      passCode: passCode,
+      address: req.body.address,
+      status: req.body.status,
+      fullName: req.body.usrName,
       createdOn: new Date().toString(),
       updatedOn: new Date().toString(),
       accStatus: true,
@@ -24,7 +27,7 @@ router.post('/api/register', (req, res, next) => {
 
     const collection = db.getDB().collection('customer');
 
-    collection.countDocuments({ logName: req.body.usrEmail }, (err, doc) => {
+    collection.countDocuments({ usrEmail: req.body.usrEmail }, (err, doc) => {
       if (err) {
         res.status(410).jsonp(err);
         next(err);
@@ -35,7 +38,21 @@ router.post('/api/register', (req, res, next) => {
               res.status(410).jsonp(err);
               next(err);
             } else {
-              res.status(201).jsonp('Your are registered successfully...');
+              let token = jwt.sign(
+                {
+                  cId: result.insertedId,
+                  cName: req.body.fullName,
+                  cEmail: req.body.usrEmail,
+                },
+                config.secret
+              );
+              res.status(201).jsonp({
+                cId: result.insertedId,
+                cName: req.body.fullName,
+                token: token,
+              });
+
+              //res.status(201).jsonp('Your are register successfully...');
             }
           });
         } else {
@@ -61,7 +78,6 @@ router.get('/api/customer/:emailId', (req, res, next) => {
         res.status(404).jsonp('Customer not found!');
       } else {
         console.log(req.params);
-        console.log(req.params.usrName);
         collection.findOne({ logName: req.params.emailId }, (err, doc) => {
           if (err) {
             res.status(410).jsonp(err);

@@ -30,12 +30,13 @@ class Modal11 extends React.Component {
               history.goBack();
             }}
             center
+            blockScroll={false}
           >
             {this.props.modalContent()}
           </Modal>
         </div>
       </div>,
-      document.querySelector('#newModal')
+      document.querySelector('#modal')
     );
   }
 }

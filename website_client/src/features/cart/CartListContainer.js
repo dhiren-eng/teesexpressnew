@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { cartOperations } from './ducks';
 import { bindActionCreators } from 'redux';
 import CheckoutButton from './CheckoutButton';
+import calTotalPrice from '../../utilities/calTotalPrice';
 const CartListComponent = displayListHOC(CartItem);
 const CartListContainer = (props) => {
   const listItemButtons = (id) => {
@@ -27,14 +28,7 @@ const CartListContainer = (props) => {
       </div>
     );
   };
-  const calTotalPrice = (cart) => {
-    var totalPriceInfo = [0, 0];
-    cart.forEach((element) => {
-      totalPriceInfo[0] += element.totalPriceInfo[0];
-      totalPriceInfo[1] += element.totalPriceInfo[1];
-    });
-    return totalPriceInfo;
-  };
+
   const cartItemsSummary = (cart) => {
     var n = 0;
     const netPriceInfo = calTotalPrice(props.cart);

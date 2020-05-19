@@ -33,7 +33,7 @@ const CartItem = (props) => {
           <br />
           Price Per Pc : {props.item.pricePerUnit} INR
           <br />
-          Total Price : {props.item.totalPriceInfo[1]} INR
+          Total Price : {props.item.totalPriceInfo[0]} INR
           <br />
           <br />
         </div>
