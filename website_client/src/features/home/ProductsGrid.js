@@ -9,11 +9,11 @@ const ProductsGrid = () => {
           className="d-flex img-fluid"
         />
         <img
-          src="http://localhost:8000/uploads/drop cut tees.png"
+          src="http://localhost:8000/uploads/hoodies.png"
           className="d-flex img-fluid"
         />
         <img
-          src="http://localhost:8000/uploads/"
+          src="http://localhost:8000/uploads/zipper hoodies.png"
           className="d-flex img-fluid"
         />
       </div>
@@ -23,11 +23,11 @@ const ProductsGrid = () => {
           className="d-flex img-fluid"
         />
         <img
-          src="http://localhost:8000/uploads/"
+          src="http://localhost:8000/uploads/drop cut tees.png"
           className="d-flex img-fluid"
         />
         <img
-          src="http://localhost:8000/uploads/"
+          src="http://localhost:8000/uploads/High_neck_zipper_hoodies.png"
           className="d-flex img-fluid"
         />
       </div>
@@ -37,7 +37,7 @@ const ProductsGrid = () => {
           className="d-flex img-fluid"
         />
         <img
-          src="http://localhost:8000/uploads/"
+          src="http://localhost:8000/uploads/shirts.png"
           className="d-flex img-fluid"
         />
         <img

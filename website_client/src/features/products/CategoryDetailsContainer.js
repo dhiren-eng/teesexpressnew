@@ -6,7 +6,9 @@ import CategoryDetailsComponent from './CategoryDetailsComponent';
 import { bindActionCreators } from 'redux';
 class CategoryDetailsContainer extends React.Component {
   componentDidMount() {
-    this.props.fetchCategory(this.props.match.params.id);
+    if (!this.props.product) {
+      this.props.fetchCategory(this.props.match.params.id);
+    }
   }
   renderButton = (obj) => {
     return (
@@ -15,6 +17,7 @@ class CategoryDetailsContainer extends React.Component {
           e.preventDefault();
           await this.props.addToCart(obj);
         }}
+        className="btn btn-primary"
       >
         {' '}
         Add To Cart{' '}

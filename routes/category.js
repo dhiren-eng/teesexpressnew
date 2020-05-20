@@ -7,7 +7,7 @@ router.get('/api/category/all', (req, res, next) => {
   db.getDB()
     .collection('category')
     .find()
-    .sort({ cateName: 1 })
+    .sort({ createdOn: -1 })
     .toArray((err, doc) => {
       console.log('entered');
       if (err) {
@@ -53,20 +53,17 @@ router.post('/api/category', midWare.checkToken, (req, res, next) => {
   if (!req.body.cateName) {
     res.status(400).jsonp('Incomplete information');
   } else {
-    url = req.body.cateName
-      .toLowerCase()
-      .replace(/ /g, '-')
-      .replace(/[^\w-]+/g, '');
     let cateInfo = {
       cateName: req.body.cateName,
       availability: req.body.availability,
       description: req.body.description,
-      cateUrl: url,
+      url: req.body.url,
+      pricePerUnit: req.body.pricePerUnit,
       createdOn: new Date().toString(),
       updatedOn: new Date().toString(),
     };
     let dataCollect = db.getDB().collection('category');
-    dataCollect.countDocuments({ cateUrl: url }, (err, doc) => {
+    dataCollect.countDocuments({ url: req.body.url }, (err, doc) => {
       if (err) {
         res.status(410).jsonp(err);
         next(err);
@@ -87,29 +84,26 @@ router.post('/api/category', midWare.checkToken, (req, res, next) => {
 });
 
 router.put('/api/category/:id', midWare.checkToken, (req, res, next) => {
-  if (!req.body.cateName) {
-    res.status(400).jsonp('Incomplete information');
-  } else {
-    let cateInfo = {
-      $set: {
-        cateName: req.body.cateName,
-        availability: req.body.availability,
-        description: req.body.description,
-        updatedOn: new Date().toString(),
-      },
-    };
-    let dataCollect = db.getDB().collection('category');
-    dataCollect.updateOne(
-      { _id: db.getPrimaryKey(req.params.id) },
-      cateInfo,
-      (iErr, result) => {
-        if (iErr) {
-          res.status(410).jsonp(iErr);
-          next(iErr);
-        } else res.status(201).jsonp('Category updated successfully!');
-      }
-    );
-  }
+  let cateInfo = {
+    $set: {
+      cateName: req.body.cateName,
+      availability: req.body.availability,
+      description: req.body.description,
+      pricePerUnit: req.body.pricePerUnit,
+      updatedOn: new Date().toString(),
+    },
+  };
+  let dataCollect = db.getDB().collection('category');
+  dataCollect.updateOne(
+    { _id: db.getPrimaryKey(req.params.id) },
+    cateInfo,
+    (iErr, result) => {
+      if (iErr) {
+        res.status(410).jsonp(iErr);
+        next(iErr);
+      } else res.status(201).jsonp('Category updated successfully!');
+    }
+  );
 });
 
 router.delete('/api/category/:id', midWare.checkToken, (req, res, next) => {

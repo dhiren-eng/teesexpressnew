@@ -157,21 +157,9 @@ class CategoryDetailsComponent extends React.Component {
     return c;
   };
   calPricePerUnit = (printingOnArr, totalQuantity) => {
-    var pricePerUnit = 0;
-    var plainPrice;
-    var price;
-    switch (this.props.item.cateName) {
-      case 'Dry fit Round Neck T shirt': {
-        price = 115;
-        break;
-      }
-      case 'Pure Cotton Round Neck T shirt': {
-        price = 135;
-        break;
-      }
-      default:
-        price = 0;
-    }
+    var price = this.props.item
+      ? parseInt(this.props.item.pricePerUnit, 10)
+      : 0;
     if (totalQuantity >= 500) {
       price -= 15;
     }
@@ -208,44 +196,65 @@ class CategoryDetailsComponent extends React.Component {
   render() {
     if (this.props.item) {
       return (
-        <div>
-          <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-            <h3>{this.props.item.cateName}</h3>
-            <Input
-              title={'Order name :'}
-              name={'orderName'}
-              inputType={'text'}
-              handleChange={this.handleInput}
-              placeholder={'Enter a relevant order name'}
-              value={this.state.orderName}
-            />
-            <Select
-              title={'Select Color of item :'}
-              name={'color'}
-              options={this.colorOptions}
-              value={this.state.color}
-              placeholder={'None'}
-              handleChange={this.handleInput}
-            />
-            <SizeInputs
-              title={'Sizes :'}
-              options={this.state.sizes}
-              handleChange={this.handleSizeInput}
-            />
-            <CheckBox
-              title={'Printing On :'}
-              name={'printingOn'}
-              options={this.printingOptions}
-              selectedOptions={this.state.printingOn}
-              handleChange={this.handleCheckBox}
-            />
-            <br />
-            Total quantity : {this.state.totalQuantity} <br />
-            Price per pc : {this.state.pricePerUnit} <br />
-            Total Price : {this.state.totalPriceInfo[0]} <br />
-            Advance Required : {this.state.totalPriceInfo[1]} <br />
-            {this.props.button(this.state)}
-          </form>
+        <div className="container-fluid p-3">
+          <div className="row">
+            <div className="col-sm -3" style={{ textAlign: 'center' }}>
+              <img
+                src={`http://localhost:8000${this.props.item.url}`}
+                className="d-flex img-fluid"
+                alt={this.props.item.cateName}
+              />
+              <br />
+              <h4>Total quantity : {this.state.totalQuantity} </h4>
+              <h4>
+                Price per pc : <i className="fas fa-rupee-sign"></i>{' '}
+                {this.state.pricePerUnit}{' '}
+              </h4>
+              <h4>
+                Total Price : <i className="fas fa-rupee-sign"></i>{' '}
+                {this.state.totalPriceInfo[0]}{' '}
+              </h4>
+            </div>
+            <div className="col-sm-9">
+              <form
+                className="container-fluid"
+                onSubmit={this.handleFormSubmit}
+              >
+                <h3>{this.props.item.cateName}</h3>
+                <Input
+                  title={'Order name :'}
+                  name={'orderName'}
+                  inputType={'text'}
+                  handleChange={this.handleInput}
+                  placeholder={'Enter a relevant order name'}
+                  value={this.state.orderName}
+                />
+                <Select
+                  title={'Select Color of item :'}
+                  name={'color'}
+                  options={this.colorOptions}
+                  value={this.state.color}
+                  placeholder={'None'}
+                  handleChange={this.handleInput}
+                />
+                <SizeInputs
+                  title={'Sizes :'}
+                  options={this.state.sizes}
+                  handleChange={this.handleSizeInput}
+                />
+                <CheckBox
+                  title={'Printing On :'}
+                  name={'printingOn'}
+                  options={this.printingOptions}
+                  selectedOptions={this.state.printingOn}
+                  handleChange={this.handleCheckBox}
+                />
+                <br />
+                Advance Required : {this.state.totalPriceInfo[1]} <br />
+                {this.props.button(this.state)}
+              </form>
+            </div>
+          </div>
         </div>
       );
     } else {

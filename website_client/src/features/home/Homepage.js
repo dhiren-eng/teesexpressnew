@@ -12,13 +12,12 @@ class Homepage extends React.Component {
         <br />
         <div style={{ textAlign: 'center' }} className="p-3">
           <h2>
-            <u style={{ textDecorationSkipInk: 'none' }}>Products</u>
+            <u style={{ textDecorationSkipInk: 'none' }}>Bulk Order Products</u>
           </h2>
         </div>
         <div style={{ padding: '10px' }}>
-          <ProductsGrid />
+          <CategoryListContainer />
         </div>
-        <CategoryListContainer />
       </div>
     );
   }

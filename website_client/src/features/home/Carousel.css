@@ -3,3 +3,16 @@
 .carousel-item-prev {
   display: block;
 }
+
+#carousel-container {
+  padding: 5px;
+}
+.row {
+  margin-right: inherit;
+  margin-left: inherit;
+}
+.carousel-inner {
+  border-color: red;
+  border-style: solid;
+  border-width: thin;
+}
