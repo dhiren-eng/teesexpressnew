@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import axiosInstance from '../../backendApiCall/axiosInstance';
 import SetCustomerPasswordForm from './SetCustomerPasswordForm';
 import calTotalPrice from '../../utilities/calTotalPrice';
+import history from '../../history';
 class RegisterCustomerForm extends React.Component {
   renderError = ({ error, touched, visited }) => {
     if (visited && error) {
@@ -63,6 +64,7 @@ class RegisterCustomerForm extends React.Component {
         priceInfo: calTotalPrice(this.props.cart),
       };
       await this.props.addOrder(obj, this.props.cart);
+      history.push('/orderSuccess');
     } else {
       var addressArray = [];
       formValues.address = addressArray;

@@ -12,6 +12,7 @@ import AddressModal from './features/register/AddressModal';
 import LoginModal from './features/login/LoginModal';
 import EditCartItem from './features/cart/EditCartItem';
 import MyOrders from './features/orders/MyOrders';
+import OrderSuccessPage from './features/orders/OrderSuccessPage';
 class App extends React.Component {
   render() {
     return (
@@ -44,6 +45,7 @@ class App extends React.Component {
           />
           <Route path="/placeOrderPage" exact component={PlaceOrderPage} />
           <Route path="/myOrders" exact component={MyOrders} />
+          <Route path="/orderSuccess" exact component={OrderSuccessPage} />
         </div>
       </Router>
     );

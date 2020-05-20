@@ -85,7 +85,7 @@ const Profile = (props) => {
       newMode = 'editProfile';
     }
     return (
-      <div className="container-fluid p-3">
+      <div className="container-fluid p-4">
         <h2>
           <u style={{ textDecorationSkipInk: 'none' }}>
             {newMode === 'selectAddress' ? 'Shipping Details' : 'My Profile'}

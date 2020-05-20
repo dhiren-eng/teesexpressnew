@@ -38,7 +38,7 @@ const CartListContainer = (props) => {
           <thead className="table-active">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Order Name</th>
+              <th scope="col">Cart Items</th>
               <th scope="col">Total Price</th>
             </tr>
           </thead>
@@ -74,7 +74,7 @@ const CartListContainer = (props) => {
     return (
       <div className="container-fluid p-3">
         <h2>
-          <u style={{ textDecorationSkipInk: 'none' }}>Order Summary</u>
+          <u style={{ textDecorationSkipInk: 'none' }}>Cart Summary</u>
         </h2>
         <div class="row p-3">
           <br />
@@ -87,7 +87,7 @@ const CartListContainer = (props) => {
           <div className="col-md-5 order-1 order-md-2">
             <div className="card">
               <div className="card-header">
-                <h5>Order Payment :</h5>
+                <h5>Price Summary :</h5>
               </div>
               <div className="card-body">{cartItemsSummary(props.cart)}</div>
             </div>

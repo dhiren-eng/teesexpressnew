@@ -17,7 +17,7 @@ router.get('/api/order/:emailId', (req, res, next) => {
         } else {
           collection
             .find({ 'customer.email': req.params.emailId })
-            .sort({ updateOn: -1 })
+            .sort({ updateOn: 1 })
             .toArray((err, doc) => {
               if (err) {
                 res.status(410).jsonp(err);

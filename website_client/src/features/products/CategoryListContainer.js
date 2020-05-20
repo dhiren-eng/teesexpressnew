@@ -3,14 +3,19 @@ import { categoryOperations } from './ducks';
 import { connect } from 'react-redux';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import CategoryItem from './CategoryItem';
+import _ from 'lodash';
 let Column1 = displayListHOC(CategoryItem);
 let Column2 = displayListHOC(CategoryItem);
 let Column3 = displayListHOC(CategoryItem);
 class CategoryListContainer extends React.Component {
   componentDidMount() {
-    if (this.props.products.length === 0 || this.props.products.length === 1) {
+    if (
+      _.isEmpty(this.props.products) ||
+      Object.keys(this.props.products).length == 1
+    ) {
       this.props.fetchCategories();
     }
+    console.log(this.props.products1);
   }
   render() {
     if (this.props.fetchError === null && this.props.products) {

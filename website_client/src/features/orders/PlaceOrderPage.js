@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from '../register/Profile';
 import RegisterCustomerForm from '../register/RegisterCustomerForm';
 import calTotalPrice from '../../utilities/calTotalPrice';
-import { formValueSelector } from 'redux-form';
+
 import { orderOperations } from './ducks';
 import { connect } from 'react-redux';
 

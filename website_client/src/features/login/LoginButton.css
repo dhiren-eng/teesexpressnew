@@ -23,9 +23,11 @@
 }
 a {
   color: black;
+  display: block;
 }
-a:hover {
+.loginlink:hover {
   text-decoration: none;
+  display: block;
   color: black;
 }
 li:hover {
@@ -34,4 +36,18 @@ li:hover {
 .dropdown {
   margin-top: 5px;
   margin-left: 10px;
+}
+
+.btn-link {
+  color: black;
+  margin-top: 0px;
+}
+
+.loginbutton:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

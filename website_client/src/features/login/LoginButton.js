@@ -22,15 +22,26 @@ class LoginButton extends React.Component {
         ></Link>
         <ul className="dropdown-menu dropdown-menu-right">
           <li>
-            <Link to="/profile">My Profile</Link>
+            <Link to="/profile" className="loginlink">
+              My Profile
+            </Link>
           </li>
           <li className="divider"></li>
           <li>
-            <Link to="/myOrders">My Orders</Link>
+            <Link to="/myOrders" className="loginlink">
+              My Orders
+            </Link>
           </li>
           <li className="divider"></li>
           <li>
-            <Link to="#">Logout</Link>
+            <button
+              className="btn btn-link loginbutton"
+              onClick={() => {
+                this.props.logout();
+              }}
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </div>
@@ -79,4 +90,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   fetchUser: loginOperations.fetchUserInfo,
+  logout: loginOperations.logout,
 })(LoginButton);

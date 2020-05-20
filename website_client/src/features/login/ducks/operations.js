@@ -2,16 +2,18 @@ import actions from './actions';
 import cartActions from '../../cart/ducks/actions';
 import axiosInstance from '../../../backendApiCall/axiosInstance';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
+import { reset } from 'redux-form';
 import { cartOperations } from '../../cart/ducks';
 const userLogin = (usrName, yrPass) => async (dispatch) => {
   const obj = { usrName, yrPass };
   let objLS = { usrEmail: '', token: '', customerId: '' };
+  dispatch(reset('registerPage'));
   const response = await axiosInstance
     .post('/api/login', obj)
     .catch((error) => {
       dispatch(fetchErrorAction(error));
     });
-  console.log(response);
+
   if (response) {
     dispatch(fetchErrorAction(null));
 
@@ -53,4 +55,10 @@ const fetchUserInfo = () => async (dispatch) => {
     dispatch(actions.fetchUser({}));
   }
 };
-export default { userLogin, fetchUserInfo };
+
+const logout = () => async (dispatch) => {
+  localStorage.removeItem('login');
+  dispatch(actions.fetchUser({}));
+  dispatch(reset('registerPage'));
+};
+export default { userLogin, fetchUserInfo, logout };
