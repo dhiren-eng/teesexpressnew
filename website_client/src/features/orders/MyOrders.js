@@ -24,7 +24,7 @@ class MyOrders extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders,
+    orders: state.orders.orders,
   };
 };
 export default connect(mapStateToProps, {

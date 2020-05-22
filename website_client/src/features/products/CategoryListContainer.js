@@ -8,12 +8,12 @@ let Column1 = displayListHOC(CategoryItem);
 let Column2 = displayListHOC(CategoryItem);
 let Column3 = displayListHOC(CategoryItem);
 class CategoryListContainer extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     if (
       _.isEmpty(this.props.products) ||
       Object.keys(this.props.products).length == 1
     ) {
-      this.props.fetchCategories();
+      await this.props.fetchCategories();
     }
     console.log(this.props.products1);
   }
@@ -32,15 +32,26 @@ class CategoryListContainer extends React.Component {
           </div>
         </div>
       );
+    } else if (this.props.fetchError === 504) {
+      return (
+        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
+          <h4>
+            <strong>Response 504 ... Server needs to be restarted</strong>
+          </h4>
+        </div>
+      );
     } else {
-      return <div></div>;
+      return (
+        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
+          Request failed. Please retry by clicking refresh
+        </div>
+      );
     }
   }
 }
 
 const mapStateToProps = (state) => {
   const products = Object.values(state.products);
-  console.log(products);
   const products1 = products.slice(0, 3);
   const products2 = products.slice(3, 6);
   const products3 = products.slice(6, 8);

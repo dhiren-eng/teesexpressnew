@@ -3,8 +3,8 @@ import cartActions from '../../cart/ducks/actions';
 import axiosInstance from '../../../backendApiCall/axiosInstance';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
 import { reset } from 'redux-form';
-import { cartOperations } from '../../cart/ducks';
 const userLogin = (usrName, yrPass) => async (dispatch) => {
+  console.log('UserLogin called');
   const obj = { usrName, yrPass };
   let objLS = { usrEmail: '', token: '', customerId: '' };
   dispatch(reset('registerPage'));

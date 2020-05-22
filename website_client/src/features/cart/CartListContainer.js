@@ -102,6 +102,7 @@ const CartListContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    fetchError: state.fetchError.error,
     cart: state.cart,
   };
 };

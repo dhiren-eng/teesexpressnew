@@ -6,6 +6,9 @@ const fetchCategories = () => async (dispatch) => {
     .get('/api/category/all')
     .catch((error) => {
       dispatch(fetchErrorAction(error));
+      if (error.message.split(' ').pop() == 504) {
+        dispatch(fetchErrorAction(504));
+      }
     });
   if (response) {
     dispatch(fetchErrorAction(null));
@@ -18,6 +21,9 @@ const fetchCategory = (id) => async (dispatch) => {
     .get(`/api/category/${id}`)
     .catch((error) => {
       dispatch(fetchErrorAction(error));
+      if (error.message.split(' ').pop() == 504) {
+        dispatch(fetchErrorAction(504));
+      }
     });
   if (response) {
     console.log(response);

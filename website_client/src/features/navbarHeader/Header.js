@@ -2,7 +2,11 @@ import React from 'react';
 import CartIcon from '../cart/CartIcon';
 import { Link } from 'react-router-dom';
 import LoginButton from '../login/LoginButton';
+import displayListHOC from '../../commonComponents/displayListHOC';
 import './Header.css';
+import DropdownItem from './DropdownItem';
+import { connect } from 'react-redux';
+const DropdownList = displayListHOC(DropdownItem);
 class Header extends React.Component {
   render() {
     return (
@@ -35,16 +39,24 @@ class Header extends React.Component {
             id="navbarResponsive"
           >
             <div className="navbar-nav">
-              <Link
-                to="/shop"
-                className="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                data-target="#shop"
-              >
-                SHOP
-                <span className="caret"></span>
-              </Link>
-
+              <div className="nav-item dropdown" style={{ margin: '0px' }}>
+                <Link
+                  to="/shop"
+                  className="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  data-target="#shop"
+                >
+                  SHOP
+                  <span className="caret"></span>
+                </Link>
+                <ul className="dropdown-menu" aria-labelled-by="shop">
+                  {this.props.products ? (
+                    <DropdownList itemList={this.props.products} />
+                  ) : (
+                    <div></div>
+                  )}
+                </ul>
+              </div>
               <Link to="/aboutUs" className="nav-link">
                 ABOUT US
               </Link>
@@ -81,4 +93,10 @@ class Header extends React.Component {
     );
   }
 }
-export default Header;
+const mapStateToProps = (state) => {
+  const products = Object.values(state.products);
+  return {
+    products,
+  };
+};
+export default connect(mapStateToProps, null)(Header);

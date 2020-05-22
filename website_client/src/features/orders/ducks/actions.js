@@ -5,4 +5,10 @@ const fetchOrders = (arr) => {
     payload: arr,
   };
 };
-export default { fetchOrders };
+const addOrder = (obj) => {
+  return {
+    type: types.ADD_ORDER,
+    payload: obj,
+  };
+};
+export default { fetchOrders, addOrder };
