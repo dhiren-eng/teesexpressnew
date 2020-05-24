@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import { composeWithDevTools } from 'redux-devtools-extension/logOnly';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 //const composeEnhancers =
 //window.__REDUX_DEV_TOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
