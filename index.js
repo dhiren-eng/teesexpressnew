@@ -25,8 +25,11 @@ const order = require('./routes/order');
 const orderAdm = require('./routes/orderAdm');
 
 app.use((req, res, next) => {
-  //res.setHeader('Access-Control-Allow-Origin', 'https://');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'https://merchexpress.herokuapp.com'
+  );
+  //res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -49,8 +52,6 @@ app.use(category);
 app.use(order);
 app.use(orderAdm);
 
-
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('website_client/build'));
   app.get('*', (req, res) => {
@@ -65,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     res.status(404).jsonp('Unauthorized request!');
   });
-  
+
   app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).jsonp('Internal server error!');
