@@ -11,17 +11,14 @@ const state = {
 const connect = (cb) => {
   if (state.db) cb();
   else {
-    mgClient.connect(
-      process.env.MONGODB_URI || dbURL,
-      mongoOption,
-      (err, client) => {
-        if (err) cb('Error connection to database');
-        else {
-          state.db = client.db(dbName);
-          cb();
-        }
+    mgClient.connect(dbURL, mongoOption, (err, client) => {
+      if (err) cb('Error connection to database');
+      else {
+        state.db = client.db(dbName);
+        console.log(client);
+        cb();
       }
-    );
+    });
   }
 };
 
