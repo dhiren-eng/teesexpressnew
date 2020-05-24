@@ -1,7 +1,7 @@
-const mgClient = require("mongodb").MongoClient;
-const objectId = require("mongodb").ObjectID;
-const dbName = "website";
-const dbURL = "mongodb://localhost/27017/";
+const mgClient = require('mongodb').MongoClient;
+const objectId = require('mongodb').ObjectID;
+const dbName = 'website';
+const dbURL = 'mongodb://localhost/27017/';
 const mongoOption = { useUnifiedTopology: true };
 
 const state = {
@@ -11,13 +11,17 @@ const state = {
 const connect = (cb) => {
   if (state.db) cb();
   else {
-    mgClient.connect(dbURL, mongoOption, (err, client) => {
-      if (err) cb("Error connection to database");
-      else {
-        state.db = client.db(dbName);
-        cb();
+    mgClient.connect(
+      process.env.MONGODB_URI || dbURL,
+      mongoOption,
+      (err, client) => {
+        if (err) cb('Error connection to database');
+        else {
+          state.db = client.db(dbName);
+          cb();
+        }
       }
-    });
+    );
   }
 };
 

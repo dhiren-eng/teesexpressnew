@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./modules/dbConnect');
-
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 db.connect((err) => {
@@ -64,6 +64,13 @@ app.use((err, req, res, next) => {
   res.status(500).jsonp('Internal server error!');
 });
 
-app.listen(8000, () => {
-  console.log('server started port:8000');
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('website_client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__diename, 'website_client', 'build', 'index.html'));
+  });
+}
+
+app.listen(PORT, () => {
+  console.log('server started port:' + PORT);
 });
