@@ -52,6 +52,15 @@ app.use(category);
 app.use(order);
 app.use(orderAdm);
 
+app.use((req, res, next) => {
+  res.status(404).jsonp('Unauthorized request!');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).jsonp('Internal server error!');
+});
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('website_client/build'));
   console.log('env = production');
@@ -60,17 +69,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 } else {
   console.log('env = not production');
-
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
-  });
-  app.use((req, res, next) => {
-    res.status(404).jsonp('Unauthorized request!');
-  });
-
-  app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).jsonp('Internal server error!');
   });
 }
 
