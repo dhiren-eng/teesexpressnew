@@ -31,7 +31,7 @@ class Header extends React.Component {
             className="navbar-brand flex-md-grow-0 flex-grow-1"
             style={{ textAlign: 'center', padding: '0px' }}
           >
-            teesexpress
+            merchexpress
           </Link>
 
           <div
