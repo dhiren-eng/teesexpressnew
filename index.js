@@ -25,11 +25,11 @@ const order = require('./routes/order');
 const orderAdm = require('./routes/orderAdm');
 
 app.use((req, res, next) => {
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    'https://merchexpress.herokuapp.com'
-  );
-  //res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader(
+  //'Access-Control-Allow-Origin',
+  //'https://merchexpress.herokuapp.com'
+  //);
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
