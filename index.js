@@ -49,6 +49,12 @@ app.use(category);
 app.use(order);
 app.use(orderAdm);
 
+app.use('/', express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
 app.use((req, res, next) => {
   res.status(404).jsonp('Unauthorized request!');
 });
@@ -61,13 +67,7 @@ app.use((err, req, res, next) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('website_client/build'));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__diename, 'website_client', 'build', 'index.html'));
-  });
-} else {
-  app.use('/', express.static(path.join(__dirname, 'public')));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'website_client', 'build', 'index.html'));
   });
 }
 
