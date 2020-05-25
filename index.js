@@ -49,8 +49,9 @@ app.use(order);
 app.use(orderAdm);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('website_client/build'));
   app.use('/', express.static(path.join(__dirname, 'public')));
+  app.use(express.static('website_client/build'));
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'website_client', 'build', 'index.html'));
   });
