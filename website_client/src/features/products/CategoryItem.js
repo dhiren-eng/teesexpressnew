@@ -5,7 +5,7 @@ const CategoryItem = (props) => {
     <div>
       <Link to={`/products/${props.item._id}`}>
         <img
-          src={`/public${props.item.url}`}
+          src={`public${props.item.url}`}
           className="d-flex img-fluid"
           alt={props.item.cateName}
         />
