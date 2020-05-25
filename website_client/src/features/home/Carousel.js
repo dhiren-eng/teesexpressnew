@@ -19,7 +19,7 @@ const Carousel = () => {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img
-                src="http://localhost:8000/uploads/customize-tshirts-almamaterstore.gif"
+                src="public/uploads/customize-tshirts-almamaterstore.gif"
                 alt="Los Angeles"
                 className="d-block img-fluid"
               />
@@ -27,7 +27,7 @@ const Carousel = () => {
 
             <div className="carousel-item">
               <img
-                src="http://localhost:8000/uploads/20191203004502.jpg"
+                src="public/uploads/20191203004502.jpg"
                 alt="Chicago"
                 className="d-block img-fluid"
               />
@@ -35,7 +35,7 @@ const Carousel = () => {
 
             <div className="carousel-item">
               <img
-                src="http://localhost:8000/uploads/20200518211128.jpg"
+                src="public/uploads/20200518211128.jpg"
                 alt="Los Angeles"
                 className="d-block img-fluid"
               />
