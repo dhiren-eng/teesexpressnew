@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../modules/dbConnect');
 const midWare = require('../modules/middlewareAdm');
-
+console.log('inside /api/category/all');
 router.get('/api/category/all', (req, res, next) => {
   console.log('inside /api/category/all');
   db.getDB()
