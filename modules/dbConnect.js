@@ -25,6 +25,7 @@ const getPrimaryKey = (_id) => {
 };
 
 const getDB = () => {
+  console.log(state.db);
   return state.db;
 };
 

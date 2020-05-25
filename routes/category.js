@@ -4,6 +4,7 @@ const db = require('../modules/dbConnect');
 const midWare = require('../modules/middlewareAdm');
 
 router.get('/api/category/all', (req, res, next) => {
+  console.log('inside /api/category/all');
   db.getDB()
     .collection('category')
     .find()
