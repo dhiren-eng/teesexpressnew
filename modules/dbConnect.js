@@ -2,7 +2,7 @@ const mgClient = require('mongodb').MongoClient;
 const objectId = require('mongodb').ObjectID;
 const dbName = 'website';
 const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/27017/';
-const mongoOption = { useUnifiedTopology: true };
+const mongoOption = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const state = {
   db: null,
