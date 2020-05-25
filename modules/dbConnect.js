@@ -3,7 +3,7 @@ const objectId = require('mongodb').ObjectID;
 const dbName = 'website';
 const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/27017/';
 const mongoOption = { useNewUrlParser: true, useUnifiedTopology: true };
-
+console.log(dbURL);
 const state = {
   db: null,
 };
@@ -15,7 +15,6 @@ const connect = (cb) => {
       if (err) cb('Error connection to database');
       else {
         state.db = client.db(dbName);
-        console.log(client);
         cb();
       }
     });
