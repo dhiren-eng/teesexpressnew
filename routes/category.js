@@ -5,8 +5,8 @@ const midWare = require('../modules/middlewareAdm');
 console.log('inside /api/category/all');
 router.get('/api/category/all', (req, res, next) => {
   console.log('inside /api/category/all');
-  db.getDB()
-    .collection('category')
+  const collection = db.getDB().collection('category');
+  collection
     .find()
     .sort({ createdOn: -1 })
     .toArray((err, doc) => {
