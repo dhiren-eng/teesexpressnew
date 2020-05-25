@@ -2,23 +2,19 @@ const express = require('express');
 const router = express.Router();
 const db = require('../modules/dbConnect');
 const midWare = require('../modules/middlewareAdm');
-console.log('inside /api/category/all');
 router.get('/api/category/all', (req, res, next) => {
-  console.log('inside /api/category/all');
   const collection = db.getDB().collection('category');
-  collection
-    .find()
-    .sort({ createdOn: -1 })
-    .toArray((err, doc) => {
-      console.log('entered');
-      if (err) {
-        res.status(410).jsonp(err);
-        next(err);
-      } else {
-        if (doc.length == 0) res.status(404).jsonp('No category added yet!');
-        else res.status(200).jsonp(doc);
-      }
-    });
+  const categories = collection.find();
+  categories.sort({ createdOn: -1 }).toArray((err, doc) => {
+    console.log('entered');
+    if (err) {
+      res.status(410).jsonp(err);
+      next(err);
+    } else {
+      if (doc.length == 0) res.status(404).jsonp('No category added yet!');
+      else res.status(200).jsonp(doc);
+    }
+  });
 });
 
 router.get('/api/category/:id', (req, res, next) => {
