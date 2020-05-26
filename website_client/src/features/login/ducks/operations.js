@@ -1,7 +1,7 @@
 import actions from './actions';
-import cartActions from '../../cart/ducks/actions';
 import axiosInstance from '../../../backendApiCall/axiosInstance';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
+import { orderActions } from '../../orders/ducks';
 import { reset } from 'redux-form';
 const userLogin = (usrName, yrPass) => async (dispatch) => {
   console.log('UserLogin called');
@@ -59,6 +59,7 @@ const fetchUserInfo = () => async (dispatch) => {
 const logout = () => async (dispatch) => {
   await localStorage.removeItem('login');
   dispatch(actions.fetchUser({}));
+  dispatch(orderActions.fetchOrders([]));
   dispatch(reset('registerPage'));
 };
 export default { userLogin, fetchUserInfo, logout };

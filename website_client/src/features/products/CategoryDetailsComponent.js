@@ -195,12 +195,17 @@ class CategoryDetailsComponent extends React.Component {
   };
   render() {
     if (this.props.item) {
+      const baseURL =
+        window.location.origin === 'http://localhost:3000'
+          ? 'http://localhost:8000/public'
+          : 'https://merchexpress.herokuapp.com/public';
+      console.log(baseURL);
       return (
         <div className="container-fluid p-3">
           <div className="row">
             <div className="col-sm -3" style={{ textAlign: 'center' }}>
               <img
-                src={`public${this.props.item.url}`}
+                src={`${baseURL}${this.props.item.url}`}
                 className="d-flex img-fluid"
                 alt={this.props.item.cateName}
               />

@@ -73,13 +73,17 @@ const addOrder = (obj, cart) => async (dispatch) => {
 const fetchOrders = (email) => async (dispatch) => {
   try {
     const response = await axiosInstance.get(`/api/order/${email}`);
-    if (!response) {
-      dispatch(fetchErrorAction(504));
-    } else {
-      dispatch(actions.fetchErrorAction(null));
+    console.log(response);
+    if (response) {
+      console.log('In elseeee');
+      dispatch(fetchErrorAction(null));
       dispatch(actions.fetchOrders(response.data));
+    } else {
+      dispatch(fetchErrorAction(504));
     }
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 };
 const registerGuest = (email, obj) => async (dispatch) => {
   console.log(obj);
