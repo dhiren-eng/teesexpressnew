@@ -200,7 +200,7 @@ class CategoryDetailsComponent extends React.Component {
           <div className="row">
             <div className="col-sm -3" style={{ textAlign: 'center' }}>
               <img
-                src={`http://localhost:8000${this.props.item.url}`}
+                src={`public${this.props.item.url}`}
                 className="d-flex img-fluid"
                 alt={this.props.item.cateName}
               />

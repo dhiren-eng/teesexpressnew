@@ -56,6 +56,7 @@ class OrderSuccessPage extends React.Component {
   };
   render() {
     console.log(this.props.currentOrder);
+    const login = localStorage.getItem('login');
     if (!_.isEmpty(this.props.currentOrder)) {
       return (
         <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
@@ -74,10 +75,16 @@ class OrderSuccessPage extends React.Component {
           <br />
           <br />
           <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
-            <SetCustomerPasswordForm renderInput={this.renderInput} />
-            <button type="btn btn-primary" type="submit">
-              Register
-            </button>
+            {login ? (
+              <div></div>
+            ) : (
+              <div>
+                <SetCustomerPasswordForm renderInput={this.renderInput} />
+                <button type="btn btn-primary" type="submit">
+                  Register
+                </button>
+              </div>
+            )}
           </form>
         </div>
       );

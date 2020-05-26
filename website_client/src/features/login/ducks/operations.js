@@ -57,7 +57,7 @@ const fetchUserInfo = () => async (dispatch) => {
 };
 
 const logout = () => async (dispatch) => {
-  localStorage.removeItem('login');
+  await localStorage.removeItem('login');
   dispatch(actions.fetchUser({}));
   dispatch(reset('registerPage'));
 };

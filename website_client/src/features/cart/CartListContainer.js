@@ -96,7 +96,20 @@ const CartListContainer = (props) => {
       </div>
     );
   } else {
-    return <div></div>;
+    return (
+      <div className="container-fluid p-5">
+        <img
+          src="public/uploads/empty-cart.png"
+          alt="empty cart"
+          style={{
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            verticalAlign: 'center',
+            display: 'block',
+          }}
+        />
+      </div>
+    );
   }
 };
 

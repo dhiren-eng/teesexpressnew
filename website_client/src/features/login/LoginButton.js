@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginOperations } from './ducks';
+import history from '../../history';
 import _ from 'lodash';
 import './LoginButton.css';
 class LoginButton extends React.Component {
@@ -36,8 +37,9 @@ class LoginButton extends React.Component {
           <li>
             <button
               className="btn btn-link loginbutton"
-              onClick={() => {
-                this.props.logout();
+              onClick={async () => {
+                await this.props.logout();
+                history.push('/');
               }}
             >
               Logout
