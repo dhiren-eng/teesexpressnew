@@ -6,7 +6,7 @@ import { orderOperations } from './ducks';
 let OrderList = displayListHOC(OrderItem);
 class MyOrders extends React.Component {
   componentDidMount = async () => {
-    const login = JSON.parse(localStorage.getItem('login'));
+    const login = await JSON.parse(localStorage.getItem('login'));
     if (login) {
       await this.props.fetchOrders(login.usrEmail);
     }
