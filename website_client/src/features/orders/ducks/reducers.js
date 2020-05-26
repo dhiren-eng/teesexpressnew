@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 const orderReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.FETCH_ORDERS:
-      return { ...state, orders: [...state.orders, ...action.payload] };
+      return { ...state, orders: action.payload };
     case types.ADD_ORDER:
       return { ...state, currentOrder: action.payload };
     default:
