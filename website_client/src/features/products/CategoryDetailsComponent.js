@@ -41,10 +41,6 @@ class CategoryDetailsComponent extends React.Component {
     this.printingOptions = ['Front', 'Back', 'Left', 'Right'];
   }
   componentDidMount = () => {
-    const image = Storage.get('T shirt dress.png').then((data) =>
-      console.log(data)
-    );
-    console.log(image);
     if (this.props.editCartItem) {
       console.log('Inside if ');
       this.setState(
