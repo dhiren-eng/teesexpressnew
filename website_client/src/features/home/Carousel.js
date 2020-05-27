@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Carousel.css';
+import Storage from '@aws-amplify/storage';
 class Carousel extends React.Component {
   state = { url1: '', url2: '', url3: '' };
   componentDidMount = () => {
