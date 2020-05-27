@@ -9,8 +9,6 @@ export function configureAmplify() {
       userPoolWebClientId: 'rctmgqu0jhl6ievcsg5qfv0h6',
       roleArn: 'arn:aws:iam::160631031376:role/Cognito_merchexpresAuth_Role',
       accountId: '160631031376',
-      accessKeyId: 'AKIAJE53ZPETHIGNMF5A',
-      secretAccessKey: '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',
     },
     Storage: {
       bucket: 'merchexpres',
@@ -18,7 +16,7 @@ export function configureAmplify() {
       identityPoolId: 'us-east-1:6eab7b04-7989-492a-92a1-fd9c82c90cbe',
     },
   });
-  console.log(Amplify);
+  console.log(Amplify.Auth);
 }
 export function SetS3Config(bucket, level) {
   Storage.configure({
