@@ -15,6 +15,9 @@ export function configureAmplify() {
       region: 'us-east-1',
       identityPoolId: 'us-east-1:6eab7b04-7989-492a-92a1-fd9c82c90cbe',
     },
+  }).catch((err) => {
+    console.log('Configure error');
+    console.log(err);
   });
   console.log(Amplify.Auth);
 }
