@@ -9,6 +9,8 @@ export function configureAmplify() {
       userPoolWebClientId: 'rctmgqu0jhl6ievcsg5qfv0h6',
       roleArn: 'arn:aws:iam::160631031376:role/Cognito_merchexpresAuth_Role',
       accountId: '160631031376',
+      accessKeyId: 'AKIAJE53ZPETHIGNMF5A',
+      secretAccessKey: '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',
     },
     Storage: {
       bucket: 'merchexpres',
