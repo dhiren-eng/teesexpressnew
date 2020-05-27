@@ -16,6 +16,7 @@ export function configureAmplify() {
       identityPoolId: 'us-east-1:6eab7b04-7989-492a-92a1-fd9c82c90cbe',
     },
   });
+  console.log(Amplify);
 }
 export function SetS3Config(bucket, level) {
   Storage.configure({
