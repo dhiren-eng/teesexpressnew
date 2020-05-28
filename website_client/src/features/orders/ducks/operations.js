@@ -7,7 +7,7 @@ import actions from './actions';
 const addOrder = (obj, cart) => async (dispatch) => {
   try {
     const login = await JSON.parse(localStorage.getItem('login'));
-    var newObj, customerId;
+    var newObj, customerId, customer;
     if (login) {
       customerId = login.customerId;
       newObj = { ...obj, customerId };
@@ -21,7 +21,7 @@ const addOrder = (obj, cart) => async (dispatch) => {
         phone: obj.phone,
         status: 'Guest',
       };
-      const customer = await axiosInstance
+      customer = await axiosInstance
         .post('/api/register', newCustomer)
         .catch((err) => {
           console.log(err);
@@ -69,6 +69,7 @@ const addOrder = (obj, cart) => async (dispatch) => {
       dispatch(fetchErrorAction(504));
     }
   }
+  return customer;
 };
 const fetchOrders = (email) => async (dispatch) => {
   try {

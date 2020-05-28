@@ -4,7 +4,6 @@ const INITIAL_STATE = {
   currentOrder: {},
 };
 const orderReducer = (state = INITIAL_STATE, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case types.FETCH_ORDERS:
       return { ...state, orders: action.payload };

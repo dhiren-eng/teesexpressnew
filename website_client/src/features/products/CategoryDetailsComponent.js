@@ -25,6 +25,7 @@ class CategoryDetailsComponent extends React.Component {
       totalQuantity: 0,
       pricePerUnit: 0,
       totalPriceInfo: [],
+      url: '',
     };
     this.colorOptions = [
       'Black',
@@ -41,6 +42,12 @@ class CategoryDetailsComponent extends React.Component {
     this.printingOptions = ['Front', 'Back', 'Left', 'Right'];
   }
   componentDidMount = () => {
+    const url = this.props.item.url.substr(9, this.props.item.url.length - 1);
+    Storage.get(url)
+      .then((result) => {
+        this.setState({ url: result });
+      })
+      .catch((err) => console.log(err));
     if (this.props.editCartItem) {
       console.log('Inside if ');
       this.setState(
@@ -196,17 +203,12 @@ class CategoryDetailsComponent extends React.Component {
   };
   render() {
     if (this.props.item) {
-      const baseURL =
-        window.location.origin === 'http://localhost:3000'
-          ? 'http://localhost:8000/public'
-          : 'https://merchexpress.herokuapp.com/public';
-      console.log(baseURL);
       return (
         <div className="container-fluid p-3">
           <div className="row">
             <div className="col-sm -3" style={{ textAlign: 'center' }}>
               <img
-                src={`${baseURL}${this.props.item.url}`}
+                src={this.state.url}
                 className="d-flex img-fluid"
                 alt={this.props.item.cateName}
               />

@@ -5,6 +5,7 @@ import LoginButton from '../login/LoginButton';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import './Header.css';
 import DropdownItem from './DropdownItem';
+import SearchInput from '../search/SearchInput';
 import { connect } from 'react-redux';
 const DropdownList = displayListHOC(DropdownItem);
 class Header extends React.Component {
@@ -70,10 +71,7 @@ class Header extends React.Component {
               </Link>
             </div>
             <div className="container-4 nav-item ml-auto">
-              <input type="search" id="search" placeholder="Search..." />
-              <button type="button" className="btn d-flex search-button">
-                <i class="fas fa-search" style={{ fontSize: '18px' }}></i>
-              </button>
+              <SearchInput />
             </div>
           </div>
 

@@ -80,6 +80,7 @@ class LoginModal extends React.Component {
             }
           }}
           type="submit"
+          className="btn btn-primary"
         >
           Sign In
         </button>

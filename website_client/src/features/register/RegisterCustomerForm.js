@@ -63,8 +63,14 @@ class RegisterCustomerForm extends React.Component {
         address: formValues.deliveryAddress,
         priceInfo: calTotalPrice(this.props.cart),
       };
-      await this.props.addOrder(obj, this.props.cart);
-      history.push('/orderSuccess');
+      const response = await this.props.addOrder(obj, this.props.cart);
+      console.log(response);
+      if (response) {
+        history.push(`/orderSuccess/`);
+      } else {
+        const registerStatus = 'registered';
+        history.push(`/orderSuccess/${registerStatus}`);
+      }
     } else {
       var addressArray = [];
       formValues.address = addressArray;

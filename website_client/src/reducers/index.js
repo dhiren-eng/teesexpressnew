@@ -5,6 +5,7 @@ import productReducer from '../features/products/ducks';
 import cartReducer from '../features/cart/ducks';
 import fetchErrorReducer from './fetchErrorReducer';
 import orderReducer from '../features/orders/ducks';
+import searchReducer from '../features/search/ducks';
 export default combineReducers({
   fetchError: fetchErrorReducer,
   login: loginReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   products: productReducer,
   cart: cartReducer,
   orders: orderReducer,
+  search: searchReducer,
 });

@@ -55,7 +55,7 @@ class OrderSuccessPage extends React.Component {
     history.push('/');
   };
   render() {
-    console.log(this.props.currentOrder);
+    console.log(this.props.match.params.registerStatus);
     const login = localStorage.getItem('login');
     if (!_.isEmpty(this.props.currentOrder)) {
       return (
@@ -68,17 +68,18 @@ class OrderSuccessPage extends React.Component {
           you shortly and remain in contact till you have received your
           consignment
           <br />
-          <strong>
-            You may also register with the provided email, name and phone number
-            to earn points and avail special discounts on further orders
-          </strong>
           <br />
           <br />
           <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
-            {login ? (
+            {login || this.props.match.params.registerStatus ? (
               <div></div>
             ) : (
               <div>
+                <strong>
+                  You may also register with the provided email, name and phone
+                  number to earn points and avail special discounts on further
+                  orders
+                </strong>
                 <SetCustomerPasswordForm renderInput={this.renderInput} />
                 <button type="btn btn-primary" type="submit">
                   Register
