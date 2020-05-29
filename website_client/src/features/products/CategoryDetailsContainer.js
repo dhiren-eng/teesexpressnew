@@ -43,12 +43,14 @@ class CategoryDetailsContainer extends React.Component {
           </h4>
         </div>
       );
-    } else {
+    } else if (this.props.fetchError) {
       return (
         <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
           Request failed. Please retry by clicking refresh
         </div>
       );
+    } else {
+      return <div></div>;
     }
   }
 }

@@ -24,6 +24,7 @@ class CategoryItem extends React.Component {
             src={this.state.url}
             className="d-flex img-fluid"
             alt={this.props.item.cateName}
+            style={{ padding: '2px' }}
           />
         </Link>
       </div>
