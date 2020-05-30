@@ -2,6 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import history from '../../history';
+import { Link } from 'react-router-dom';
 class SearchInput extends React.Component {
   state = { searchTerm: '' };
   onInputChange = (e) => {
@@ -25,8 +26,13 @@ class SearchInput extends React.Component {
           placeholder="Search..."
           onChange={this.onInputChange}
           value={this.state.searchTerm}
+          autoComplete="off"
         />
-        <button type="submit" className="btn d-flex search-button">
+        <button
+          type="submit"
+          className="btn d-flex"
+          style={{ boxShadow: 'none', outline: 'none' }}
+        >
           <i class="fas fa-search" style={{ fontSize: '18px' }}></i>
         </button>
       </form>

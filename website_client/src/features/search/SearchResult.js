@@ -21,14 +21,35 @@ class SearchResult extends React.Component {
       console.log('inside render');
       var count = -1;
       return (
-        <div className="container-fluid p-5">
+        <div className="container-fluid p-3">
+          <h5>
+            Search results for keyword :{'  '}
+            <strong>{this.props.match.params.searchTerm}</strong>
+          </h5>
+          Found {this.props.result.length} results: <br />
+          <br />
           {this.props.result.map((element) => {
             ++count;
             console.log(count);
             console.log(this.state.urlArr[count]);
             return (
               <Link to={`/products/${element._id}`}>
-                <img src={this.state.urlArr[count]} alt={element} />
+                <img
+                  src={this.state.urlArr[count]}
+                  alt={element}
+                  style={{
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    verticalAlign: 'center',
+                    display: 'block',
+                    width: '500px',
+                    borderColor: 'lightgrey',
+                    borderStyle: 'solid',
+                    borderWidth: 'thin',
+                    padding: '5px',
+                  }}
+                />
+                <br />
               </Link>
             );
           })}

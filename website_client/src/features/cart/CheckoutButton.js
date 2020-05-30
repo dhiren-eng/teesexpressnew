@@ -10,9 +10,16 @@ const CheckoutButton = () => {
     );
   } else {
     return (
-      <Link to="/loginModal/showOrderOptions" className="btn btn-danger">
-        Place order with advance payment
-      </Link>
+      <React.Fragment>
+        <Link to="/loginModal/showOrderOptions" className="btn btn-danger">
+          Place order with advance payment
+        </Link>
+        <br />
+        <br />
+        <Link to="/" className="btn btn-info">
+          Continue Shopping
+        </Link>
+      </React.Fragment>
     );
   }
 };

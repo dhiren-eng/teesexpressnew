@@ -4,6 +4,7 @@ import history from '../../../history';
 import { cartActions } from '../../cart/ducks';
 import { loginOperations } from '../../login/ducks';
 import actions from './actions';
+import { reset } from 'redux-form';
 const addOrder = (obj, cart) => async (dispatch) => {
   try {
     const login = await JSON.parse(localStorage.getItem('login'));
@@ -63,6 +64,8 @@ const addOrder = (obj, cart) => async (dispatch) => {
       dispatch(actions.fetchOrders(response.data));
       dispatch(cartActions.initCartAc([]));
     }
+    dispatch(reset('registerPage'));
+    dispatch(reset('orderSample'));
   } catch (error) {
     dispatch(fetchErrorAction(error));
     if (error.message.split(' ').pop() == 504) {

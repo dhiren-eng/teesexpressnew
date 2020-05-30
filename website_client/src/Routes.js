@@ -10,6 +10,7 @@ import EditCartItem from './features/cart/EditCartItem';
 import MyOrders from './features/orders/MyOrders';
 import OrderSuccessPage from './features/orders/OrderSuccessPage';
 import SearchResult from './features/search/SearchResult';
+import OrderSample from './features/orders/OrderSample';
 import { Route, Switch } from 'react-router-dom';
 
 const Routes = () => {
@@ -34,6 +35,7 @@ const Routes = () => {
         component={OrderSuccessPage}
       />
       <Route path="/searchResult/:searchTerm?" exact component={SearchResult} />
+      <Route path="/orderSample" exact component={OrderSample} />
     </Switch>
   );
 };

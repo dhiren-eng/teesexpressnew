@@ -97,17 +97,30 @@ const CartListContainer = (props) => {
     );
   } else {
     return (
-      <div className="container-fluid p-5">
-        <img
-          src="public/uploads/empty-cart.png"
-          alt="empty cart"
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            verticalAlign: 'center',
-            display: 'block',
-          }}
-        />
+      <div
+        className="container-fluid p-5"
+        style={{
+          textAlign: 'center',
+          verticalAlign: 'baseline',
+          display: 'block',
+          color: 'lightgrey',
+        }}
+      >
+        <i class="fas fa-shopping-cart" style={{ fontSize: '400px' }}></i>
+        <span class="fa fa-stack-1x" style={{ color: 'grey' }}>
+          <span
+            style={{
+              fontSize: '35px',
+              display: 'block',
+              marginTop: '130px',
+              marginLeft: '60px',
+              verticalAlign: 'center',
+              textAlign: 'center',
+            }}
+          >
+            Empty Cart :(
+          </span>
+        </span>
       </div>
     );
   }

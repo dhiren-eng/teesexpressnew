@@ -229,8 +229,23 @@ class CategoryDetailsComponent extends React.Component {
                 onSubmit={this.handleFormSubmit}
               >
                 <h3>{this.props.item.cateName}</h3>
+                {this.state.totalQuantity < 20 ? (
+                  <div
+                    className="alert alert-danger"
+                    style={{
+                      fontSize: '10px',
+                      display: 'inline-block',
+                      lineHeight: '20px',
+                      padding: '5px',
+                    }}
+                  >
+                    Minimum quantity for bulk order needs to be 20 pcs
+                  </div>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
                 <Input
-                  title={'Order name :'}
+                  title={'Order name* :'}
                   name={'orderName'}
                   inputType={'text'}
                   handleChange={this.handleInput}
@@ -257,8 +272,8 @@ class CategoryDetailsComponent extends React.Component {
                   selectedOptions={this.state.printingOn}
                   handleChange={this.handleCheckBox}
                 />
-                <br />
                 Advance Required : {this.state.totalPriceInfo[1]} <br />
+                <br />
                 {this.props.button(this.state)}
               </form>
             </div>

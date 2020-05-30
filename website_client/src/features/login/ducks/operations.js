@@ -8,6 +8,7 @@ const userLogin = (usrName, yrPass) => async (dispatch) => {
   const obj = { usrName, yrPass };
   let objLS = { usrEmail: '', token: '', customerId: '' };
   dispatch(reset('registerPage'));
+  dispatch(reset('orderSample'));
   const response = await axiosInstance
     .post('/api/login', obj)
     .catch((error) => {
@@ -61,5 +62,6 @@ const logout = () => async (dispatch) => {
   dispatch(actions.fetchUser({}));
   dispatch(orderActions.fetchOrders([]));
   dispatch(reset('registerPage'));
+  dispatch(reset('orderSample'));
 };
 export default { userLogin, fetchUserInfo, logout };

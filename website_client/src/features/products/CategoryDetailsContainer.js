@@ -11,18 +11,45 @@ class CategoryDetailsContainer extends React.Component {
     }
   }
   renderButton = (obj) => {
-    return (
-      <button
-        onClick={async (e) => {
-          e.preventDefault();
-          await this.props.addToCart(obj);
-        }}
-        className="btn btn-primary"
-      >
-        {' '}
-        Add To Cart{' '}
-      </button>
-    );
+    if (obj.totalQuantity < 20 || obj.totalQuantity <= 0 || !obj.orderName) {
+      return (
+        <React.Fragment>
+          <span
+            style={{ display: 'inline-block' }}
+            tabindex="0"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Total quantity needs to be >= 20 and Order name compulsary"
+          >
+            <button
+              className="btn btn-primary"
+              style={{ pointerEvents: 'none' }}
+              disabled
+            >
+              {' '}
+              Add To Cart{' '}
+            </button>
+          </span>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <button
+            onClick={async (e) => {
+              e.preventDefault();
+              if (obj.totalQuantity >= 20) {
+                await this.props.addToCart(obj);
+              }
+            }}
+            className="btn btn-primary"
+          >
+            {' '}
+            Add To Cart{' '}
+          </button>
+        </React.Fragment>
+      );
+    }
   };
   render() {
     console.log(this.props);
