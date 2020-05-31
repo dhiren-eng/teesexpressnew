@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { customerOperations } from './ducks';
 import { loginOperations } from '../login/ducks';
 import RegisterCustomerForm from './RegisterCustomerForm';
-import { Field } from 'redux-form';
+import LoadingOverlay from 'react-loading-overlay';
+import { loader } from '../loadFeature/ducks';
 const RegisterCustomerContainer = (props) => {
   const renderButton = () => {
     return (
@@ -36,26 +37,37 @@ const RegisterCustomerContainer = (props) => {
     }
   };
   return (
-    <div class="container-fluid p-3">
-      <h3>
-        <u style={{ textDecorationSkipInk: 'none' }}>Sign Up in TeesExpress</u>
-      </h3>
-      <br />
-      {fetchErrorMessage()}
-      <RegisterCustomerForm
-        registerCustomerAction={props.registerCustomer}
-        userLogin={props.userLogin}
-        renderButton={renderButton}
-      />
-    </div>
+    <LoadingOverlay
+      active={props.isLoading}
+      spinner
+      text="Loading your content..."
+    >
+      <div class="container-fluid p-3">
+        <h3>
+          <u style={{ textDecorationSkipInk: 'none' }}>
+            Sign Up in TeesExpress
+          </u>
+        </h3>
+        <br />
+        {fetchErrorMessage()}
+
+        <RegisterCustomerForm
+          registerCustomerAction={props.registerCustomer}
+          userLogin={props.userLogin}
+          renderButton={renderButton}
+        />
+      </div>
+    </LoadingOverlay>
   );
 };
 const mapStateToProps = (state) => {
   return {
     fetchError: state.fetchError.error,
+    isLoading: state.isLoading.startLoad,
   };
 };
 export default connect(mapStateToProps, {
   registerCustomer: customerOperations.registerCustomer,
   userLogin: loginOperations.userLogin,
+  startLoader: loader.startLoader,
 })(RegisterCustomerContainer);

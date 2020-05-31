@@ -7,6 +7,8 @@ import displayListHOC from '../../commonComponents/displayListHOC';
 import { customerOperations } from './ducks';
 import { Link } from 'react-router-dom';
 import { Field } from 'redux-form';
+import LoadingOverlay from 'react-loading-overlay';
+import { loader } from '../loadFeature/ducks';
 let AddressList = displayListHOC(AddressItem);
 var fieldOnChange;
 const Profile = (props) => {
@@ -33,7 +35,9 @@ const Profile = (props) => {
             arr = arr.filter((element) => element != address);
             var newObj = props.form.values;
             newObj.address = arr;
+            props.startLoader(true);
             await props.updateCustomer(newObj);
+            props.startLoader(false);
           }}
         >
           Delete
@@ -85,29 +89,35 @@ const Profile = (props) => {
       newMode = 'editProfile';
     }
     return (
-      <div className="container-fluid p-4">
-        <h2>
-          <u style={{ textDecorationSkipInk: 'none' }}>
-            {newMode === 'selectAddress' ? 'Shipping Details' : 'My Profile'}
-          </u>
-        </h2>
-        <br />
-        <RegisterCustomerForm
-          initialValues={obj}
-          mode={newMode}
-          getFieldOnChange={getFieldOnChange}
-          renderButton={props.renderButton}
-          cart={props.cart}
-          addOrder={props.addOrder}
-          paymentDetailsForm={props.paymentDetailsForm}
-          addAddress={addAddress}
-        >
-          <AddressList
-            itemList={props.userInfo.shippingAddress}
-            listItemButtons={(address) => listItemButtons(address, newMode)}
-          />
-        </RegisterCustomerForm>
-      </div>
+      <LoadingOverlay
+        active={props.isLoading}
+        spinner
+        text="Loading your content..."
+      >
+        <div className="container-fluid p-4">
+          <h2>
+            <u style={{ textDecorationSkipInk: 'none' }}>
+              {newMode === 'selectAddress' ? 'Shipping Details' : 'My Profile'}
+            </u>
+          </h2>
+          <br />
+          <RegisterCustomerForm
+            initialValues={obj}
+            mode={newMode}
+            getFieldOnChange={getFieldOnChange}
+            renderButton={props.renderButton}
+            cart={props.cart}
+            addOrder={props.addOrder}
+            paymentDetailsForm={props.paymentDetailsForm}
+            addAddress={addAddress}
+          >
+            <AddressList
+              itemList={props.userInfo.shippingAddress}
+              listItemButtons={(address) => listItemButtons(address, newMode)}
+            />
+          </RegisterCustomerForm>
+        </div>
+      </LoadingOverlay>
     );
   } else {
     return <div></div>;
@@ -117,8 +127,10 @@ const mapStateToProps = (state) => {
   return {
     form: state.form.registerPage,
     userInfo: state.login.userInfo,
+    isLoading: state.isLoading.startLoad,
   };
 };
 export default connect(mapStateToProps, {
   updateCustomer: customerOperations.updateCustomer,
+  startLoader: loader.startLoader,
 })(Profile);

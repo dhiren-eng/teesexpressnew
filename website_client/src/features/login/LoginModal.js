@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { loginOperations } from './ducks';
 import { Link } from 'react-router-dom';
 import { loader } from '../loadFeature/ducks';
-import LoadingOverlay from 'react-loading-overlay';
+
 class LoginModal extends React.Component {
   constructor(props) {
     super(props);
@@ -157,24 +157,17 @@ class LoginModal extends React.Component {
   };
   render() {
     return (
-      <LoadingOverlay
-        active={this.props.isLoading}
-        spinner
-        text="Loading your content..."
-      >
-        <Modal1
-          upperPart={() => this.upperPart()}
-          lowerPart={() => this.lowerPart()}
-          domNode="#modal"
-        />
-      </LoadingOverlay>
+      <Modal1
+        upperPart={() => this.upperPart()}
+        lowerPart={() => this.lowerPart()}
+        domNode="#modal"
+      />
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
     fetchError: state.fetchError.error,
-    isLoading: state.isLoading.startLoad,
   };
 };
 export default connect(mapStateToProps, {

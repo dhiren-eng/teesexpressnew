@@ -91,74 +91,68 @@ class RegisterCustomerForm extends React.Component {
       this.props.getFieldOnChange(this.renderInputt);
     }
     return (
-      <LoadingOverlay
-        active={this.props.isLoading}
-        spinner
-        text="Loading your content..."
-      >
-        <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
+      <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
+        <Field
+          name="Email"
+          component={this.renderInputt}
+          label="Email: "
+          type="text"
+          disabled={
+            this.props.mode === 'editProfile' ||
+            this.props.mode === 'selectAddress'
+          }
+        />
+        <Field
+          name="mobileNumber"
+          component={this.renderInputt}
+          label="Mobile Number: "
+          type="number"
+          disabled={this.props.mode === 'editProfile'}
+        />
+        <Field
+          name="fullName"
+          component={this.renderInputt}
+          type="text"
+          label="Full Name: "
+        />
+        {this.props.mode === 'orderAsGuest' && (
           <Field
-            name="Email"
+            name="deliveryAddress"
             component={this.renderInputt}
-            label="Email: "
             type="text"
-            disabled={
-              this.props.mode === 'editProfile' ||
-              this.props.mode === 'selectAddress'
-            }
+            label="Delivery Address: "
           />
-          <Field
-            name="mobileNumber"
-            component={this.renderInputt}
-            label="Mobile Number: "
-            type="number"
-            disabled={this.props.mode === 'editProfile'}
-          />
-          <Field
-            name="fullName"
-            component={this.renderInputt}
-            type="text"
-            label="Full Name: "
-          />
-          {this.props.mode === 'orderAsGuest' && (
-            <Field
-              name="deliveryAddress"
-              component={this.renderInputt}
-              type="text"
-              label="Delivery Address: "
-            />
-          )}
-          {this.props.mode === 'selectAddress' && (
-            <div>
-              <strong>SELECT ADDRESS :</strong>
-              <br />
-              <br />
-              {this.props.children}
-            </div>
-          )}
-          {this.props.mode === 'editProfile' && (
-            <div>
-              <br />
-              <br />
-              <strong>SAVED ADDRESSES</strong> <br />
-              <br />
-              {this.props.children}
-            </div>
-          )}
-          {this.props.addAddress && this.props.addAddress()}
-          {this.props.mode ? (
-            <React.Fragment></React.Fragment>
-          ) : (
-            <SetCustomerPasswordForm renderInput={this.renderInputt} />
-          )}
-          {this.props.paymentDetailsForm && this.props.paymentDetailsForm()}
-          {this.props.renderButton ? (
-            this.props.renderButton()
-          ) : (
-            <React.Fragment></React.Fragment>
-          )}
-        </form>
-      </LoadingOverlay>
+        )}
+        {this.props.mode === 'selectAddress' && (
+          <div>
+            <strong>SELECT ADDRESS :</strong>
+            <br />
+            <br />
+            {this.props.children}
+          </div>
+        )}
+        {this.props.mode === 'editProfile' && (
+          <div>
+            <br />
+            <br />
+            <strong>SAVED ADDRESSES</strong> <br />
+            <br />
+            {this.props.children}
+          </div>
+        )}
+        {this.props.addAddress && this.props.addAddress()}
+        {this.props.mode ? (
+          <React.Fragment></React.Fragment>
+        ) : (
+          <SetCustomerPasswordForm renderInput={this.renderInputt} />
+        )}
+        {this.props.paymentDetailsForm && this.props.paymentDetailsForm()}
+        {this.props.renderButton ? (
+          this.props.renderButton()
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
+      </form>
     );
   }
 }
@@ -191,16 +185,11 @@ const validate = (formValues) => {
   }
   return errors;
 };
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.isLoading.startLoad,
-  };
-};
 const rcf = reduxForm({
   form: 'registerPage',
   destroyOnUnmount: false,
   validate,
 })(RegisterCustomerForm);
-export default connect(mapStateToProps, {
+export default connect(null, {
   startLoader: loader.startLoader,
 })(rcf);

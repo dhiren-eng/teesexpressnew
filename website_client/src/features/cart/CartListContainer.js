@@ -22,9 +22,9 @@ const CartListContainer = (props) => {
           className="btn btn-danger card-link"
           onClick={(e) => {
             e.preventDefault();
-            this.props.startLoader(true);
+            props.startLoader(true);
             props.deleteCartItem(id);
-            this.props.startLoader(false);
+            props.startLoader(false);
           }}
         >
           Delete Item
@@ -77,7 +77,7 @@ const CartListContainer = (props) => {
   if (props.cart.length != 0) {
     return (
       <LoadingOverlay
-        active={this.props.isLoading}
+        active={props.isLoading}
         spinner
         text="Loading your content..."
       >

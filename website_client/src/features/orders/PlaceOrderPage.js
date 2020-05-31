@@ -2,7 +2,8 @@ import React from 'react';
 import Profile from '../register/Profile';
 import RegisterCustomerForm from '../register/RegisterCustomerForm';
 import calTotalPrice from '../../utilities/calTotalPrice';
-
+import { loader } from '../loadFeature/ducks';
+import LoadingOverlay from 'react-loading-overlay';
 import { orderOperations } from './ducks';
 import { connect } from 'react-redux';
 
@@ -53,19 +54,21 @@ const PlaceOrderPage = (props) => {
           paymentDetailsForm={paymentDetailsForm}
         />
       ) : (
-        <div class="container-fluid p-3">
-          <h2>
-            <u style={{ textDecorationSkipInk: 'none' }}>Place Order</u>
-          </h2>
-          <br />
-          <RegisterCustomerForm
-            mode="orderAsGuest"
-            renderButton={renderButton}
-            cart={props.cart}
-            addOrder={props.addOrder}
-            paymentDetailsForm={paymentDetailsForm}
-          />
-        </div>
+        <LoadingOverlay active={props.isLoading} spinner text="Signing In...">
+          <div class="container-fluid p-3">
+            <h2>
+              <u style={{ textDecorationSkipInk: 'none' }}>Place Order</u>
+            </h2>
+            <br />
+            <RegisterCustomerForm
+              mode="orderAsGuest"
+              renderButton={renderButton}
+              cart={props.cart}
+              addOrder={props.addOrder}
+              paymentDetailsForm={paymentDetailsForm}
+            />
+          </div>
+        </LoadingOverlay>
       )}
     </div>
   );
@@ -73,6 +76,7 @@ const PlaceOrderPage = (props) => {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
+    startLoader: loader.startLoader,
   };
 };
 
