@@ -14,31 +14,33 @@ class Homepage extends React.Component {
     var style = displayHome ? 'inline' : 'none';
 
     return (
-      <LoadingOverlay
-        active={this.props.isLoading}
-        spinner
-        text="Loading your content..."
-      >
-        <div className="container-fluid" style={{ padding: '10px' }}>
-          <div style={{ display: style }}>
-            <div className="container-fluid">
-              <Carousel />
-            </div>
-            <br />
-            <div style={{ textAlign: 'center' }} className="p-3">
-              <h2>
-                <u style={{ textDecorationSkipInk: 'none' }}>
-                  Bulk Order Products
-                </u>
-              </h2>
-            </div>
-            <div style={{ padding: '15px' }}>
-              <CategoryListContainer />
+      <React.Fragment>
+        <LoadingOverlay
+          active={this.props.isLoading}
+          spinner
+          text="Loading your content..."
+        >
+          <div className="container-fluid" style={{ padding: '10px' }}>
+            <div style={{ display: style }}>
+              <div className="container-fluid">
+                <Carousel />
+              </div>
+              <br />
+              <div style={{ textAlign: 'center' }} className="p-3">
+                <h2>
+                  <u style={{ textDecorationSkipInk: 'none' }}>
+                    Bulk Order Products
+                  </u>
+                </h2>
+              </div>
+              <div style={{ padding: '15px' }}>
+                <CategoryListContainer />
+              </div>
             </div>
           </div>
-          <Routes />
-        </div>
-      </LoadingOverlay>
+        </LoadingOverlay>
+        <Routes />
+      </React.Fragment>
     );
   }
 }
