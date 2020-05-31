@@ -3,13 +3,16 @@ import './CartIcon.css';
 import { connect } from 'react-redux';
 import { cartOperations } from './ducks';
 import _ from 'lodash';
+import { loader } from '../loadFeature/ducks';
 class CartIcon extends React.Component {
   constructor(props) {
     super(props);
     this.propState = [0, 0];
   }
   componentDidMount = () => {
+    this.props.startLoader(true);
     this.props.initCartLS();
+    this.props.startLoader(false);
   };
   listenToLS = () => {
     window.addEventListener('storage', () => {
@@ -20,7 +23,9 @@ class CartIcon extends React.Component {
         ) != 0
       ) {
         console.log('comparison done');
+        this.props.startLoader(true);
         this.props.initCartLS();
+        this.props.startLoader(false);
       }
     });
   };
@@ -42,7 +47,9 @@ class CartIcon extends React.Component {
       !_.isEmpty(this.props.userInfo) &&
       JSON.stringify(this.props.userInfo) !== JSON.stringify(prevProps.userInfo)
     ) {
+      this.props.startLoader(true);
       await this.props.initCart();
+      this.props.startLoader(false);
       this.propState.push(1);
       this.propState.shift();
     } else if (
@@ -50,14 +57,18 @@ class CartIcon extends React.Component {
       this.props.cart.length !== prevProps.cart.length &&
       this.propState[0] == 1
     ) {
+      this.props.startLoader(true);
       await this.props.initCart();
+      this.props.startLoader(false);
       this.propState.push(1);
       this.propState.shift();
     } else if (
       _.isEmpty(this.props.userInfo) &&
       JSON.stringify(this.props.userInfo) !== JSON.stringify(prevProps.userInfo)
     ) {
+      this.props.startLoader(true);
       await this.props.initCartLS();
+      this.props.startLoader(false);
       this.propState = [0, 0];
     }
     console.log(this.propState);
@@ -72,4 +83,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   initCartLS: cartOperations.initCartLS,
   initCart: cartOperations.initCart,
+  startLoader: loader.startLoader,
 })(CartIcon);
