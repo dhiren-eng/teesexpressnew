@@ -328,7 +328,7 @@ class CategoryDetailsComponent extends React.Component {
                   onMouseUpp={this.handleOnMouseUpp}
                 />
                 <SizeInputs
-                  title={'Sizes :'}
+                  title={'Size breakup :'}
                   options={this.state.sizes}
                   handleChange={this.handleSizeInput}
                   onMouseUpp={this.handleOnMouseUpp}
