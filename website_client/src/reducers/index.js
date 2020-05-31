@@ -6,7 +6,9 @@ import cartReducer from '../features/cart/ducks';
 import fetchErrorReducer from './fetchErrorReducer';
 import orderReducer from '../features/orders/ducks';
 import searchReducer from '../features/search/ducks';
+import loadReducer from '../features/loadFeature/ducks';
 export default combineReducers({
+  isLoading: loadReducer,
   fetchError: fetchErrorReducer,
   login: loginReducer,
   form: formReducer,

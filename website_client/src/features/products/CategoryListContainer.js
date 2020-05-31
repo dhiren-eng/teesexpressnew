@@ -3,6 +3,7 @@ import { categoryOperations } from './ducks';
 import { connect } from 'react-redux';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import CategoryItem from './CategoryItem';
+import { loader } from '../loadFeature/ducks';
 import _ from 'lodash';
 let Column1 = displayListHOC(CategoryItem);
 let Column2 = displayListHOC(CategoryItem);
@@ -13,7 +14,9 @@ class CategoryListContainer extends React.Component {
       _.isEmpty(this.props.products) ||
       Object.keys(this.props.products).length == 1
     ) {
+      this.props.startLoader(true);
       await this.props.fetchCategories();
+      this.props.startLoader(false);
     }
     console.log(this.props.products1);
   }
@@ -32,18 +35,12 @@ class CategoryListContainer extends React.Component {
           </div>
         </div>
       );
-    } else if (this.props.fetchError === 504) {
-      return (
-        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-          <h4>
-            <strong>Response 504 ... Server needs to be restarted</strong>
-          </h4>
-        </div>
-      );
     } else {
       return (
         <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-          Request failed. Please retry by clicking refresh
+          <h4>
+            <strong>{this.props.fetchError.message}</strong>
+          </h4>
         </div>
       );
     }
@@ -66,4 +63,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchCategories: categoryOperations.fetchCategories,
+  startLoader: loader.startLoader,
 })(CategoryListContainer);

@@ -96,6 +96,17 @@ class CategoryDetailsComponent extends React.Component {
         () => console.log(this.state)
       );
     }
+    if (this.state.totalQuantity >= 20) {
+      this.setState((prevState) => ({
+        ...prevState,
+        minQuantityError: false,
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        minQuantityError: true,
+      }));
+    }
     this.setState(
       (prevState) => ({ ...prevState, [name]: value }),
       () => console.log(this.state)
