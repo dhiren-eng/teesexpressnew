@@ -24,8 +24,10 @@ class CategoryDetailsComponent extends React.Component {
       },
       totalQuantity: 0,
       pricePerUnit: 0,
+      originalPricePerUnit: props.item.pricePerUnit,
       totalPriceInfo: [],
-      url: '',
+      url: props.item.url,
+      awsURL: '',
     };
     this.colorOptions = [
       'Black',
@@ -42,10 +44,11 @@ class CategoryDetailsComponent extends React.Component {
     this.printingOptions = ['Front', 'Back', 'Left', 'Right'];
   }
   componentDidMount = () => {
+    console.log(this.props.item);
     const url = this.props.item.url.substr(9, this.props.item.url.length - 1);
     Storage.get(url)
       .then((result) => {
-        this.setState({ url: result });
+        this.setState({ awsURL: result });
       })
       .catch((err) => console.log(err));
     if (this.props.editCartItem) {
@@ -166,7 +169,7 @@ class CategoryDetailsComponent extends React.Component {
   };
   calPricePerUnit = (printingOnArr, totalQuantity) => {
     var price = this.props.item
-      ? parseInt(this.props.item.pricePerUnit, 10)
+      ? parseInt(this.state.originalPricePerUnit, 10)
       : 0;
     if (totalQuantity >= 500) {
       price -= 15;
@@ -208,7 +211,7 @@ class CategoryDetailsComponent extends React.Component {
           <div className="row">
             <div className="col-sm -3" style={{ textAlign: 'center' }}>
               <img
-                src={this.state.url}
+                src={this.state.awsURL}
                 className="d-flex img-fluid"
                 alt={this.props.item.cateName}
               />
