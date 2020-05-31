@@ -17,6 +17,7 @@ const CheckBox = (props) => {
                 value={option}
                 checked={props.selectedOptions.indexOf(option) > -1}
                 type="checkbox"
+                onMouseUp={props.onMouseUpp}
               />{' '}
             </label>
           );

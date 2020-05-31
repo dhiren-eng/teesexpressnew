@@ -17,6 +17,7 @@ const SizeInputs = (props) => {
                 inputType={'number'}
                 value={count}
                 handleChange={props.handleChange}
+                onMouseUp={props.onMouseUpp}
               />
             </label>
           );

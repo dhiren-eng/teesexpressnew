@@ -11,6 +11,8 @@ class CategoryDetailsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      ordernameError: false,
+      minQuantityError: false,
       orderName: '',
       cateName: props.item.cateName,
       color: 'Black',
@@ -82,6 +84,18 @@ class CategoryDetailsComponent extends React.Component {
   handleInput = (e) => {
     let value = e.target.value;
     let name = e.target.name;
+
+    if (e.target.value.localeCompare('') != 0) {
+      this.setState(
+        (prevState) => ({ ...prevState, ordernameError: false }),
+        () => console.log(this.state)
+      );
+    } else if (e.target.value.localeCompare('') == 0) {
+      this.setState(
+        (prevState) => ({ ...prevState, ordernameError: true }),
+        () => console.log(this.state)
+      );
+    }
     this.setState(
       (prevState) => ({ ...prevState, [name]: value }),
       () => console.log(this.state)
@@ -90,7 +104,7 @@ class CategoryDetailsComponent extends React.Component {
   handleSizeInput = (e) => {
     var arr;
     e.preventDefault();
-    let value = e.target.value;
+    let value = parseInt(e.target.value, 10);
     let name = e.target.name;
     for (let key in this.state.sizes) {
       if (key.localeCompare(name) == 0) {
@@ -101,6 +115,17 @@ class CategoryDetailsComponent extends React.Component {
           () => console.log(this.state)
         );
       }
+    }
+    if (e.target.value >= 20) {
+      this.setState((prevState) => ({
+        ...prevState,
+        minQuantityError: false,
+      }));
+    } else {
+      this.setState((prevState) => ({
+        ...prevState,
+        minQuantityError: true,
+      }));
     }
     this.setState((prevState) => ({
       ...prevState,
@@ -155,6 +180,29 @@ class CategoryDetailsComponent extends React.Component {
         prevState.pricePerUnit
       ),
     }));
+  };
+  handleOnMouseUpp = (e) => {
+    console.log(e.target.name);
+    if (this.state.orderName.localeCompare('') == 0) {
+      this.setState(
+        (prevState) => ({ ...prevState, ordernameError: true }),
+        () => console.log(this.state)
+      );
+    }
+    if (
+      e.target.name == 'S' ||
+      e.target.name == 'M' ||
+      e.target.name == 'L' ||
+      e.target.name == 'XL' ||
+      e.target.name == 'XXL'
+    ) {
+      if (this.state.totalQuantity < 20) {
+        this.setState((prevState) => ({
+          ...prevState,
+          minQuantityError: true,
+        }));
+      }
+    }
   };
   calculateTotalQuantity = (obj) => {
     var arr = Object.values(obj);
@@ -234,7 +282,7 @@ class CategoryDetailsComponent extends React.Component {
                 <h3>{this.props.item.cateName}</h3>
                 {this.state.totalQuantity < 20 ? (
                   <div
-                    className="alert alert-danger"
+                    className="alert alert-primary"
                     style={{
                       fontSize: '10px',
                       display: 'inline-block',
@@ -255,6 +303,21 @@ class CategoryDetailsComponent extends React.Component {
                   placeholder={'Enter a relevant order name'}
                   value={this.state.orderName}
                 />
+                {this.state.ordernameError == true ? (
+                  <div
+                    className="alert alert-danger"
+                    style={{
+                      fontSize: '10px',
+                      display: 'inline-block',
+                      lineHeight: '20px',
+                      padding: '5px',
+                    }}
+                  >
+                    Order Name Required !
+                  </div>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
                 <Select
                   title={'Select Color of item :'}
                   name={'color'}
@@ -262,18 +325,36 @@ class CategoryDetailsComponent extends React.Component {
                   value={this.state.color}
                   placeholder={'None'}
                   handleChange={this.handleInput}
+                  onMouseUpp={this.handleOnMouseUpp}
                 />
                 <SizeInputs
                   title={'Sizes :'}
                   options={this.state.sizes}
                   handleChange={this.handleSizeInput}
+                  onMouseUpp={this.handleOnMouseUpp}
                 />
+                {this.state.minQuantityError == true ? (
+                  <div
+                    className="alert alert-danger"
+                    style={{
+                      fontSize: '10px',
+                      display: 'inline-block',
+                      lineHeight: '20px',
+                      padding: '5px',
+                    }}
+                  >
+                    Minimum quantity for bulk orders needs to be 20 pcs
+                  </div>
+                ) : (
+                  <React.Fragment></React.Fragment>
+                )}
                 <CheckBox
                   title={'Printing On :'}
                   name={'printingOn'}
                   options={this.printingOptions}
                   selectedOptions={this.state.printingOn}
                   handleChange={this.handleCheckBox}
+                  onMouseUpp={this.handleOnMouseUpp}
                 />
                 Advance Required : {this.state.totalPriceInfo[1]} <br />
                 <br />

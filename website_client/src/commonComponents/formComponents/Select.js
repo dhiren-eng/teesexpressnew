@@ -9,6 +9,7 @@ const Select = (props) => {
         name={props.name}
         value={props.value}
         onChange={props.handleChange}
+        onMouseUp={props.onMouseUpp}
         className="form-control"
       >
         <option value="" disabled>
