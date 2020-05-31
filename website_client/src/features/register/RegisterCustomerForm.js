@@ -79,6 +79,7 @@ class RegisterCustomerForm extends React.Component {
     } else {
       var addressArray = [];
       formValues.address = addressArray;
+      console.log(formValues);
       this.props.startLoader(true);
       await this.props.registerCustomerAction(formValues);
       await this.props.userLogin(formValues.Email, formValues.password);

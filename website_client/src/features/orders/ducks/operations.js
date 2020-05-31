@@ -64,7 +64,6 @@ const addOrder = (obj, cart) => async (dispatch) => {
       dispatch(actions.fetchOrders(response.data));
       dispatch(cartActions.initCartAc([]));
     }
-    dispatch(reset('registerPage'));
     dispatch(reset('orderSample'));
   } catch (error) {
     dispatch(fetchErrorAction(error));
