@@ -7,6 +7,8 @@ import { cartOperations } from './ducks';
 import { bindActionCreators } from 'redux';
 import CheckoutButton from './CheckoutButton';
 import calTotalPrice from '../../utilities/calTotalPrice';
+import LoadingOverlay from 'react-loading-overlay';
+import { loader } from '../loadFeature/ducks';
 const CartListComponent = displayListHOC(CartItem);
 const CartListContainer = (props) => {
   const listItemButtons = (id) => {
@@ -20,7 +22,9 @@ const CartListContainer = (props) => {
           className="btn btn-danger card-link"
           onClick={(e) => {
             e.preventDefault();
+            this.props.startLoader(true);
             props.deleteCartItem(id);
+            this.props.startLoader(false);
           }}
         >
           Delete Item
@@ -72,28 +76,34 @@ const CartListContainer = (props) => {
   };
   if (props.cart.length != 0) {
     return (
-      <div className="container-fluid p-3">
-        <h2>
-          <u style={{ textDecorationSkipInk: 'none' }}>Cart Summary</u>
-        </h2>
-        <div class="row p-3">
-          <br />
-          <div className="col-md-7 order-2 order-md-1">
-            <CartListComponent
-              itemList={props.cart}
-              listItemButtons={(id) => listItemButtons(id)}
-            />
-          </div>
-          <div className="col-md-5 order-1 order-md-2">
-            <div className="card">
-              <div className="card-header">
-                <h5>Price Summary :</h5>
+      <LoadingOverlay
+        active={this.props.isLoading}
+        spinner
+        text="Loading your content..."
+      >
+        <div className="container-fluid p-3">
+          <h2>
+            <u style={{ textDecorationSkipInk: 'none' }}>Cart Summary</u>
+          </h2>
+          <div class="row p-3">
+            <br />
+            <div className="col-md-7 order-2 order-md-1">
+              <CartListComponent
+                itemList={props.cart}
+                listItemButtons={(id) => listItemButtons(id)}
+              />
+            </div>
+            <div className="col-md-5 order-1 order-md-2">
+              <div className="card">
+                <div className="card-header">
+                  <h5>Price Summary :</h5>
+                </div>
+                <div className="card-body">{cartItemsSummary(props.cart)}</div>
               </div>
-              <div className="card-body">{cartItemsSummary(props.cart)}</div>
             </div>
           </div>
         </div>
-      </div>
+      </LoadingOverlay>
     );
   } else {
     return (
@@ -130,18 +140,25 @@ const mapStateToProps = (state) => {
   return {
     fetchError: state.fetchError.error,
     cart: state.cart,
+    isLoading: state.isLoading.startLoad,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   let login = JSON.parse(localStorage.getItem('login'));
   if (login) {
     return bindActionCreators(
-      { deleteCartItem: cartOperations.deleteCartItem },
+      {
+        deleteCartItem: cartOperations.deleteCartItem,
+        startLoader: loader.startLoader,
+      },
       dispatch
     );
   } else {
     return bindActionCreators(
-      { deleteCartItem: cartOperations.deleteCartItemLS },
+      {
+        deleteCartItem: cartOperations.deleteCartItemLS,
+        startLoader: loader.startLoader,
+      },
       dispatch
     );
   }

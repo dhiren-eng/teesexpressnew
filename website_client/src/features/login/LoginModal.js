@@ -6,7 +6,8 @@ import history from '../../history';
 import { connect } from 'react-redux';
 import { loginOperations } from './ducks';
 import { Link } from 'react-router-dom';
-
+import { loader } from '../loadFeature/ducks';
+import LoadingOverlay from 'react-loading-overlay';
 class LoginModal extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +64,9 @@ class LoginModal extends React.Component {
         />
         <button
           onClick={async () => {
+            this.props.startLoader(true);
             await this.props.userLogin(this.state.email, this.state.password);
+            this.props.startLoader(false);
             if (this.props.fetchError === null) {
               this.props.match.params.orderOption
                 ? history.push('/placeOrderPage')
@@ -105,6 +108,13 @@ class LoginModal extends React.Component {
             {this.state.loginError}
           </div>
         ) : null}
+        {this.props.isLoading == true ? (
+          <div style={{ fontSize: '12px', color: 'green' }}>
+            Signing In User.....
+          </div>
+        ) : (
+          <React.Fragment></React.Fragment>
+        )}
       </div>
     );
   };
@@ -147,19 +157,27 @@ class LoginModal extends React.Component {
   };
   render() {
     return (
-      <Modal1
-        upperPart={() => this.upperPart()}
-        lowerPart={() => this.lowerPart()}
-        domNode="#modal"
-      />
+      <LoadingOverlay
+        active={this.props.isLoading}
+        spinner
+        text="Loading your content..."
+      >
+        <Modal1
+          upperPart={() => this.upperPart()}
+          lowerPart={() => this.lowerPart()}
+          domNode="#modal"
+        />
+      </LoadingOverlay>
     );
   }
 }
 const mapStateToProps = (state) => {
   return {
     fetchError: state.fetchError.error,
+    isLoading: state.isLoading.startLoad,
   };
 };
 export default connect(mapStateToProps, {
   userLogin: loginOperations.userLogin,
+  startLoader: loader.startLoader,
 })(LoginModal);

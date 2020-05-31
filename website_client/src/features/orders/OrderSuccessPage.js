@@ -6,6 +6,8 @@ import _ from 'lodash';
 import SetCustomerPasswordForm from '../register/SetCustomerPasswordForm';
 import { reduxForm } from 'redux-form';
 import history from '../../history';
+import LoadingOverlay from 'react-loading-overlay';
+import { loader } from '../loadFeature/ducks';
 class OrderSuccessPage extends React.Component {
   renderError = ({ error, visited }) => {
     if (visited && error) {
@@ -51,7 +53,9 @@ class OrderSuccessPage extends React.Component {
       status: 'Registered',
       shippingAddress: arr,
     };
+    this.props.startLoader(true);
     await this.props.registerGuest(this.props.email, obj);
+    this.props.startLoader(false);
     history.push('/');
   };
   render() {
@@ -59,35 +63,41 @@ class OrderSuccessPage extends React.Component {
     const login = localStorage.getItem('login');
     if (!_.isEmpty(this.props.currentOrder)) {
       return (
-        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-          <h2>Order Successfully Placed</h2>
-          <br />
-          <h3>Order Id : {this.props.currentOrder.orderId}</h3>
-          <br />
-          Our customer support assigned for your order will get in touch with
-          you shortly and remain in contact till you have received your
-          consignment
-          <br />
-          <br />
-          <br />
-          <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
-            {login || this.props.match.params.registerStatus ? (
-              <div></div>
-            ) : (
-              <div>
-                <strong>
-                  You may also register with the provided email, name and phone
-                  number to earn points and avail special discounts on further
-                  orders
-                </strong>
-                <SetCustomerPasswordForm renderInput={this.renderInput} />
-                <button type="btn btn-primary" type="submit">
-                  Register
-                </button>
-              </div>
-            )}
-          </form>
-        </div>
+        <LoadingOverlay
+          active={this.props.isLoading}
+          spinner
+          text="Loading your content..."
+        >
+          <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
+            <h2>Order Successfully Placed</h2>
+            <br />
+            <h3>Order Id : {this.props.currentOrder.orderId}</h3>
+            <br />
+            Our customer support assigned for your order will get in touch with
+            you shortly and remain in contact till you have received your
+            consignment
+            <br />
+            <br />
+            <br />
+            <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
+              {login || this.props.match.params.registerStatus ? (
+                <div></div>
+              ) : (
+                <div>
+                  <strong>
+                    You may also register with the provided email, name and
+                    phone number to earn points and avail special discounts on
+                    further orders
+                  </strong>
+                  <SetCustomerPasswordForm renderInput={this.renderInput} />
+                  <button type="btn btn-primary" type="submit">
+                    Register
+                  </button>
+                </div>
+              )}
+            </form>
+          </div>
+        </LoadingOverlay>
       );
     } else if (this.props.fetchError) {
       return (
@@ -133,6 +143,7 @@ const mapStateToProps = (state) => {
     email,
     deliveryAddress,
     fullName,
+    isLoading: state.isLoading.startLoad,
   };
 };
 const OrderSuccessForm = reduxForm({
@@ -141,4 +152,5 @@ const OrderSuccessForm = reduxForm({
 })(OrderSuccessPage);
 export default connect(mapStateToProps, {
   registerGuest: orderOperations.registerGuest,
+  startLoader: loader.startLoader,
 })(OrderSuccessForm);

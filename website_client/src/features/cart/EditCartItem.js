@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import CategoryDetailsComponent from '../products/CategoryDetailsComponent';
 import { cartOperations } from './ducks';
 import { bindActionCreators } from 'redux';
+import LoadingOverlay from 'react-loading-overlay';
+import { loader } from '../loadFeature/ducks';
 const EditCartItem = (props) => {
   const updateCartItemButton = (obj) => {
     return (
@@ -10,7 +12,9 @@ const EditCartItem = (props) => {
         className="btn btn-primary"
         onClick={(e) => {
           e.preventDefault();
+          props.startLoader(true);
           props.updateCartItem(obj);
+          props.startLoader(false);
         }}
       >
         Update Cart Item
@@ -19,11 +23,17 @@ const EditCartItem = (props) => {
   };
   if (props.cartItem) {
     return (
-      <CategoryDetailsComponent
-        item={props.cartItem}
-        button={(obj) => updateCartItemButton(obj)}
-        editCartItem="true"
-      />
+      <LoadingOverlay
+        active={props.isLoading}
+        spinner
+        text="Loading your content..."
+      >
+        <CategoryDetailsComponent
+          item={props.cartItem}
+          button={(obj) => updateCartItemButton(obj)}
+          editCartItem="true"
+        />
+      </LoadingOverlay>
     );
   } else {
     return <div></div>;
@@ -38,6 +48,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log(item);
   return {
     cartItem: item,
+    isLoading: state.isLoading.startLoad,
   };
 };
 
@@ -45,12 +56,18 @@ const mapDispatchToProps = (dispatch) => {
   const login = JSON.parse(localStorage.getItem('login'));
   if (login) {
     return bindActionCreators(
-      { updateCartItem: cartOperations.updateCartItem },
+      {
+        updateCartItem: cartOperations.updateCartItem,
+        startLoader: loader.startLoader,
+      },
       dispatch
     );
   } else {
     return bindActionCreators(
-      { updateCartItem: cartOperations.updateCartItemLS },
+      {
+        updateCartItem: cartOperations.updateCartItemLS,
+        startLoader: loader.startLoader,
+      },
       dispatch
     );
   }
