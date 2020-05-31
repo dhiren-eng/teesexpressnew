@@ -20,10 +20,10 @@ const CartListContainer = (props) => {
         </Link>
         <button
           className="btn btn-danger card-link"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
             props.startLoader(true);
-            props.deleteCartItem(id);
+            await props.deleteCartItem(id);
             props.startLoader(false);
           }}
         >

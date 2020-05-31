@@ -10,10 +10,10 @@ const EditCartItem = (props) => {
     return (
       <button
         className="btn btn-primary"
-        onClick={(e) => {
+        onClick={async (e) => {
           e.preventDefault();
           props.startLoader(true);
-          props.updateCartItem(obj);
+          await props.updateCartItem(obj);
           props.startLoader(false);
         }}
       >
