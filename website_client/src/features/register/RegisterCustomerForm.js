@@ -81,8 +81,13 @@ class RegisterCustomerForm extends React.Component {
       formValues.address = addressArray;
       console.log(formValues);
       this.props.startLoader(true);
-      await this.props.registerCustomerAction(formValues);
-      await this.props.userLogin(formValues.Email, formValues.password);
+      const response = await this.props.registerCustomerAction(formValues);
+      console.log(response);
+      if (response) {
+        console.log('inside if');
+        await this.props.userLogin(formValues.Email, formValues.password);
+        history.push('/');
+      }
       this.props.startLoader(false);
     }
   };

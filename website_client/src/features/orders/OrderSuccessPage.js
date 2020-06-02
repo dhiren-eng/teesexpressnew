@@ -54,7 +54,8 @@ class OrderSuccessPage extends React.Component {
       shippingAddress: arr,
     };
     this.props.startLoader(true);
-    await this.props.registerGuest(this.props.email, obj);
+    const response = await this.props.registerGuest(this.props.email, obj);
+    console.log(response);
     this.props.startLoader(false);
     history.push('/');
   };

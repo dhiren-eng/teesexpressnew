@@ -93,20 +93,31 @@ router.get('/api/customer/:emailId', (req, res, next) => {
 });
 
 router.put('/api/customer/:emailId', (req, res, next) => {
+  var custInfo;
   var BCRYPT_SALT_ROUNDS = 12;
   let passCode = '';
   if (req.body.yrPass) {
     passCode = bcrypt.hashSync(req.body.yrPass, BCRYPT_SALT_ROUNDS);
+    custInfo = {
+      $set: {
+        usrName: req.body.usrName,
+        shippingAddress: req.body.shippingAddress,
+        passCode: passCode,
+        regStatus: req.body.status,
+        updatedOn: new Date().toString(),
+      },
+    };
+  } else {
+    custInfo = {
+      $set: {
+        usrName: req.body.usrName,
+        shippingAddress: req.body.shippingAddress,
+        regStatus: req.body.status,
+        updatedOn: new Date().toString(),
+      },
+    };
   }
-  let custInfo = {
-    $set: {
-      usrName: req.body.usrName,
-      shippingAddress: req.body.shippingAddress,
-      passCode: passCode,
-      regStatus: req.body.status,
-      updatedOn: new Date().toString(),
-    },
-  };
+
   let dataCollect = db.getDB().collection('customer');
   dataCollect.updateOne(
     { logName: req.params.emailId },

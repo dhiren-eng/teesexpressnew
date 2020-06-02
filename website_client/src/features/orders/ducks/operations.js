@@ -90,7 +90,8 @@ const fetchOrders = (email) => async (dispatch) => {
 };
 const registerGuest = (email, obj) => async (dispatch) => {
   console.log(obj);
-  await axiosInstance.put(`/api/customer/${email}`, obj);
+  const response = await axiosInstance.put(`/api/customer/${email}`, obj);
   await dispatch(loginOperations.userLogin(email, obj.yrPass));
+  return response;
 };
 export default { addOrder, fetchOrders, registerGuest };
