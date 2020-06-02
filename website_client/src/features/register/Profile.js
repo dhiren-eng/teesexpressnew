@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { Field } from 'redux-form';
 import LoadingOverlay from 'react-loading-overlay';
 import { loader } from '../loadFeature/ducks';
+import { formValueSelector } from 'redux-form';
+import { change } from 'redux-form';
 let AddressList = displayListHOC(AddressItem);
 var fieldOnChange;
 const Profile = (props) => {
@@ -37,6 +39,11 @@ const Profile = (props) => {
             newObj.address = arr;
             props.startLoader(true);
             await props.updateCustomer(newObj);
+            await props.changeRegisterFormValue(
+              'registerPage',
+              'deliveryAddress',
+              ''
+            );
             props.startLoader(false);
           }}
         >
@@ -82,6 +89,7 @@ const Profile = (props) => {
     obj.Email = props.userInfo.logName;
     obj.mobileNumber = props.userInfo.phone;
     obj.fullName = props.userInfo.usrName;
+    obj.deliveryAddress = props.deliveryAddress1;
     var newMode;
     if (props.mode) {
       newMode = 'selectAddress';
@@ -124,13 +132,21 @@ const Profile = (props) => {
   }
 };
 const mapStateToProps = (state) => {
+  const selector = formValueSelector('registerPage');
+  const deliveryAddress1 = selector(state, 'deliveryAddress');
   return {
     form: state.form.registerPage,
     userInfo: state.login.userInfo,
     isLoading: state.isLoading.startLoad,
+    deliveryAddress1,
   };
 };
 export default connect(mapStateToProps, {
   updateCustomer: customerOperations.updateCustomer,
   startLoader: loader.startLoader,
+  changeRegisterFormValue: (formName, field, value) => async (dispatch) => {
+    const response = await change(formName, field, value);
+    console.log(response);
+    dispatch(response);
+  },
 })(Profile);

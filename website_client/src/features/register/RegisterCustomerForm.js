@@ -1,12 +1,11 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import axiosInstance from '../../backendApiCall/axiosInstance';
 import SetCustomerPasswordForm from './SetCustomerPasswordForm';
 import calTotalPrice from '../../utilities/calTotalPrice';
 import history from '../../history';
 import { loader } from '../loadFeature/ducks';
 import { connect } from 'react-redux';
-import LoadingOverlay from 'react-loading-overlay';
+import { formValueSelector } from 'redux-form';
 class RegisterCustomerForm extends React.Component {
   renderError = ({ error, touched, visited }) => {
     if (visited && error) {
@@ -66,15 +65,17 @@ class RegisterCustomerForm extends React.Component {
         address: formValues.deliveryAddress,
         priceInfo: calTotalPrice(this.props.cart),
       };
-      this.props.startLoader(true);
-      const response = await this.props.addOrder(obj, this.props.cart);
-      this.props.startLoader(false);
-      console.log(response);
-      if (response) {
-        history.push(`/orderSuccess/`);
-      } else {
-        const registerStatus = 'registered';
-        history.push(`/orderSuccess/${registerStatus}`);
+      if (formValues.deliveryAddress) {
+        this.props.startLoader(true);
+        const response = await this.props.addOrder(obj, this.props.cart);
+        this.props.startLoader(false);
+        console.log(response);
+        if (response) {
+          history.push(`/orderSuccess/`);
+        } else {
+          const registerStatus = 'registered';
+          history.push(`/orderSuccess/${registerStatus}`);
+        }
       }
     } else {
       var addressArray = [];
@@ -90,6 +91,25 @@ class RegisterCustomerForm extends React.Component {
       }
       this.props.startLoader(false);
     }
+  };
+  addressMissingError = () => {
+    return (
+      <React.Fragment>
+        {this.props.deliveryAddress1 || this.props.mode === 'editProfile' ? (
+          <React.Fragment></React.Fragment>
+        ) : (
+          <div
+            class="alert alert-danger alert-dismissible"
+            style={{ fontSize: '10px', display: 'inline-block' }}
+          >
+            {' '}
+            Delivery Address required ! Please select an address
+          </div>
+        )}
+        <br />
+        {this.props.addAddress()}
+      </React.Fragment>
+    );
   };
   render() {
     if (this.props.getFieldOnChange) {
@@ -145,7 +165,7 @@ class RegisterCustomerForm extends React.Component {
             {this.props.children}
           </div>
         )}
-        {this.props.addAddress && this.props.addAddress()}
+        {this.props.addAddress && this.addressMissingError()}
         {this.props.mode ? (
           <React.Fragment></React.Fragment>
         ) : (
@@ -172,9 +192,6 @@ const validate = (formValues) => {
   if (!formValues.fullName) {
     errors.fullName = 'Field cannot be empty';
   }
-  if (!formValues.deliveryAddress) {
-    errors.deliveryAddress = 'Field cannot be empty';
-  }
   if (!formValues.password) {
     errors.password = 'Field cannot be empty';
   }
@@ -188,13 +205,21 @@ const validate = (formValues) => {
       errors.confirmPassword = 'Passwords do not match !';
     }
   }
+  console.log(errors);
   return errors;
+};
+const mapStateToProps = (state) => {
+  const selector = formValueSelector('registerPage');
+  const deliveryAddress1 = selector(state, 'deliveryAddress');
+  return {
+    deliveryAddress1,
+  };
 };
 const rcf = reduxForm({
   form: 'registerPage',
   destroyOnUnmount: false,
   validate,
 })(RegisterCustomerForm);
-export default connect(null, {
+export default connect(mapStateToProps, {
   startLoader: loader.startLoader,
 })(rcf);

@@ -4,6 +4,7 @@ import { customerOperations } from './ducks';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import history from '../../history';
+import { change } from 'redux-form';
 class AddressModal extends React.Component {
   constructor(props) {
     super(props);
@@ -54,6 +55,11 @@ class AddressModal extends React.Component {
               fullName: this.state.fullName,
               address: arr,
             });
+            await this.props.changeRegisterFormValue(
+              'registerPage',
+              'deliveryAddress',
+              ''
+            );
             history.goBack();
           }}
         >
@@ -77,4 +83,9 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   updateCustomer: customerOperations.updateCustomer,
+  changeRegisterFormValue: (formName, field, value) => async (dispatch) => {
+    const response = await change(formName, field, value);
+    console.log(response);
+    dispatch(response);
+  },
 })(AddressModal);
