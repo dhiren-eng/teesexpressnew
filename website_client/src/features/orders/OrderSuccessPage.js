@@ -69,18 +69,21 @@ class OrderSuccessPage extends React.Component {
           spinner
           text="Loading your content..."
         >
-          <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-            <h2>Order Successfully Placed</h2>
-            <br />
-            <h3>Order Id : {this.props.currentOrder.orderId}</h3>
-            <br />
-            Our customer support assigned for your order will get in touch with
-            you shortly and remain in contact till you have received your
-            consignment
-            <br />
-            <br />
-            <br />
-            <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
+          <form onSubmit={this.props.handleSubmit(this.onSubmitt)}>
+            <div
+              className="container-fluid p-4"
+              style={{ textAlign: 'center' }}
+            >
+              <h2>Order Successfully Placed</h2>
+              <br />
+              <h3>Order Id : {this.props.currentOrder.orderId}</h3>
+              <br />
+              Our customer support assigned for your order will get in touch
+              with you shortly and remain in contact till you have received your
+              consignment
+              <br />
+              <br />
+              <br />
               {login || this.props.match.params.registerStatus ? (
                 <div></div>
               ) : (
@@ -90,14 +93,15 @@ class OrderSuccessPage extends React.Component {
                     phone number to earn points and avail special discounts on
                     further orders
                   </strong>
+                  <br />
                   <SetCustomerPasswordForm renderInput={this.renderInput} />
-                  <button type="btn btn-primary" type="submit">
+                  <button className="btn btn-primary" type="submit">
                     Register
                   </button>
                 </div>
               )}
-            </form>
-          </div>
+            </div>
+          </form>
         </LoadingOverlay>
       );
     } else if (this.props.fetchError) {
@@ -125,11 +129,18 @@ class OrderSuccessPage extends React.Component {
 }
 const validate = (formValues) => {
   const errors = {};
-  if (!formValues.Email) {
-    errors.Email = 'Field cannot be empty';
+  if (!formValues.password) {
+    errors.password = 'Field cannot be empty';
   }
-  if (!formValues.mobileNumber) {
-    errors.mobileNumber = 'Field cannot be empty';
+  if (!formValues.confirmPassword) {
+    errors.confirmPassword = 'Field cannot be empty';
+  }
+  if (formValues.password && formValues.confirmPassword) {
+    console.log(formValues.password.localeCompare(formValues.confirmPassword));
+    if (formValues.password.localeCompare(formValues.confirmPassword) != 0) {
+      console.log('inside if');
+      errors.confirmPassword = 'Passwords do not match !';
+    }
   }
   return errors;
 };

@@ -54,7 +54,7 @@ const PlaceOrderPage = (props) => {
           paymentDetailsForm={paymentDetailsForm}
         />
       ) : (
-        <LoadingOverlay active={props.isLoading} spinner text="Signing In...">
+        <LoadingOverlay active={props.isLoading} spinner text="Loading Content...">
           <div class="container-fluid p-3">
             <h2>
               <u style={{ textDecorationSkipInk: 'none' }}>Place Order</u>
@@ -76,7 +76,7 @@ const PlaceOrderPage = (props) => {
 const mapStateToProps = (state) => {
   return {
     cart: state.cart,
-    startLoader: loader.startLoader,
+    isLoading: state.isLoading.startLoad,
   };
 };
 
