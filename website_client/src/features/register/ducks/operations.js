@@ -21,6 +21,7 @@ const updateCustomer = (obj) => async (dispatch) => {
   const newObj = { usrName: '', shippingAddress: '' };
   newObj.usrName = obj.fullName;
   newObj.shippingAddress = obj.address;
+  newObj.status = 'Registered';
   if (login) {
     await axios
       .put(`/api/customer/${login.usrEmail}`, newObj)
