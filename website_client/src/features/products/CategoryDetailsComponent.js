@@ -46,7 +46,7 @@ class CategoryDetailsComponent extends React.Component {
     this.printingOptions = ['Front', 'Back', 'Left', 'Right'];
   }
   componentDidMount = () => {
-    console.log(this.props.item);
+    console.log('CDM called');
     const url = this.props.item.url.substr(9, this.props.item.url.length - 1);
     Storage.get(url)
       .then((result) => {
