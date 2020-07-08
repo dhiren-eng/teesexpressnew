@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import { categoryOperations } from './ducks';
 import { cartOperations } from '../cart/ducks';
@@ -6,15 +6,19 @@ import CategoryDetailsComponent from './CategoryDetailsComponent';
 import { bindActionCreators } from 'redux';
 import LoadingOverlay from 'react-loading-overlay';
 import { loader } from '../loadFeature/ducks';
-class CategoryDetailsContainer extends React.Component {
-  componentDidMount() {
-    if (!this.props.product) {
-      this.props.startLoader(true);
-      this.props.fetchCategory(this.props.match.params.id);
-      this.props.startLoader(false);
+import { contextObject } from '../../Context/Store';
+const CategoryDetailsContainer = (props) => {
+  var { products } = useContext(contextObject);
+  var productList = Object.values(products[0]);
+  const product = products[0][props.match.params.id];
+  console.log(product);
+  const dispatch = products[1];
+  useEffect(() => {
+    if (!product) {
+      categoryOperations.fetchCategory(props.match.params.id, dispatch);
     }
-  }
-  renderButton = (obj) => {
+  }, [product]);
+  const renderButton = (obj) => {
     if (obj.totalQuantity < 20 || obj.totalQuantity <= 0 || !obj.orderName) {
       return (
         <React.Fragment>
@@ -57,64 +61,17 @@ class CategoryDetailsContainer extends React.Component {
       );
     }
   };
-  render() {
-    console.log(this.props);
-    if (this.props.fetchError === null && this.props.product) {
-      return (
-        <div>
-          <LoadingOverlay
-            active={this.props.isLoading}
-            spinner
-            text="Loading your content..."
-          >
-            <CategoryDetailsComponent
-              item={this.props.product}
-              button={(obj) => this.renderButton(obj)}
-            />
-          </LoadingOverlay>
-        </div>
-      );
-    } else if (this.props.fetchError) {
-      return (
-        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-          Request failed. Please retry by clicking refresh
-        </div>
-      );
-    } else {
-      return <div></div>;
-    }
-  }
-}
-const mapStateToProps = (state, ownProps) => {
-  return {
-    fetchError: state.fetchError.error,
-    product: state.products[ownProps.match.params.id],
-    isLoading: state.isLoading.startLoad,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  const login = JSON.parse(localStorage.getItem('login'));
-  if (login) {
-    return bindActionCreators(
-      {
-        fetchCategory: categoryOperations.fetchCategory,
-        addToCart: cartOperations.addToCart,
-        startLoader: loader.startLoader,
-      },
-      dispatch
+  if (product) {
+    return (
+      <div>
+        <CategoryDetailsComponent
+          item={product}
+          button={(obj) => renderButton(obj)}
+        />
+      </div>
     );
   } else {
-    return bindActionCreators(
-      {
-        fetchCategory: categoryOperations.fetchCategory,
-        addToCart: cartOperations.addToCartLS,
-        startLoader: loader.startLoader,
-      },
-      dispatch
-    );
+    return <div></div>;
   }
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CategoryDetailsContainer);
+export default CategoryDetailsContainer;

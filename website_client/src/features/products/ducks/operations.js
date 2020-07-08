@@ -1,33 +1,18 @@
 import axiosInstance from '../../../backendApiCall/axiosInstance';
 import actions from './actions';
 import fetchErrorAction from '../../../commonActions/fetchErrorAction';
-const fetchCategories = () => async (dispatch) => {
-  const response = await axiosInstance
-    .get('/api/category/all')
-    .catch((error) => {
-      dispatch(fetchErrorAction(error));
-      if (error.message.split(' ').pop() == 504) {
-        dispatch(fetchErrorAction(504));
-      }
-    });
+import { useContext, useEffect } from 'react';
+import { contextObject } from '../../../Context/Store';
+import _ from 'lodash';
+const fetchCategories = async (dispatch) => {
+  const response = await axiosInstance.get('/api/category/all');
   if (response) {
-    dispatch(fetchErrorAction(null));
     dispatch(actions.receiveCtgList(response.data));
   }
 };
-const fetchCategory = (id) => async (dispatch) => {
-  console.log('fetchCategory');
-  const response = await axiosInstance
-    .get(`/api/category/${id}`)
-    .catch((error) => {
-      dispatch(fetchErrorAction(error));
-      if (error.message.split(' ').pop() == 504) {
-        dispatch(fetchErrorAction(504));
-      }
-    });
+const fetchCategory = async (id, dispatch) => {
+  const response = await axiosInstance.get(`/api/category/${id}`);
   if (response) {
-    console.log(response);
-    dispatch(fetchErrorAction(null));
     dispatch(actions.receiveCtg(response.data));
   }
 };

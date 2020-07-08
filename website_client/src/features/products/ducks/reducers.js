@@ -1,7 +1,6 @@
 import types from './types';
 import _ from 'lodash';
-const initialState = {};
-const categoryReducer = (state = initialState, action) => {
+const categoryReducer = (state, action) => {
   switch (action.type) {
     case types.RESPONSE_CTGLIST:
       return { ...state, ..._.mapKeys(action.payload, '_id') };

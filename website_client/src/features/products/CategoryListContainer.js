@@ -1,67 +1,47 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { categoryOperations } from './ducks';
-import { connect } from 'react-redux';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import CategoryItem from './CategoryItem';
 import { loader } from '../loadFeature/ducks';
+import { contextObject } from '../../Context/Store';
 import _ from 'lodash';
 let Column1 = displayListHOC(CategoryItem);
 let Column2 = displayListHOC(CategoryItem);
 let Column3 = displayListHOC(CategoryItem);
-class CategoryListContainer extends React.Component {
-  async componentDidMount() {
-    if (
-      _.isEmpty(this.props.products) ||
-      Object.keys(this.props.products).length == 1
-    ) {
-      this.props.startLoader(true);
-      await this.props.fetchCategories();
-      this.props.startLoader(false);
+const CategoryListContainer = () => {
+  var { products } = useContext(contextObject);
+  var productList = Object.values(products[0]);
+  const dispatch = products[1];
+  useEffect(() => {
+    if (productList.length == 0 || productList.length == 1) {
+      categoryOperations.fetchCategories(dispatch);
     }
-    console.log(this.props.products1);
-  }
-  render() {
-    if (this.props.fetchError === null && this.props.products) {
-      return (
-        <div className="row no-gutters">
-          <div className="col-sm-4">
-            <Column1 itemList={this.props.products1} />
-          </div>
-          <div className="col-sm-4">
-            <Column2 itemList={this.props.products2} />
-          </div>
-          <div className="col-sm-4">
-            <Column3 itemList={this.props.products3} />
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
-          <h4>
-            <strong>{this.props.fetchError.message}</strong>
-          </h4>
-        </div>
-      );
-    }
-  }
-}
+  }, [productList]);
+  console.log('CLContainer');
+  const products1 = productList.slice(0, 3);
+  const products2 = productList.slice(3, 6);
+  const products3 = productList.slice(6, 8);
 
-const mapStateToProps = (state) => {
-  const products = Object.values(state.products);
-  const products1 = products.slice(0, 3);
-  const products2 = products.slice(3, 6);
-  const products3 = products.slice(6, 8);
-  return {
-    fetchError: state.fetchError.error,
-    products: Object.values(state.products),
-    products1,
-    products2,
-    products3,
-  };
+  if (productList) {
+    return (
+      <div className="row no-gutters">
+        <div className="col-sm-4">
+          <Column1 itemList={products1} />
+        </div>
+        <div className="col-sm-4">
+          <Column2 itemList={products2} />
+        </div>
+        <div className="col-sm-4">
+          <Column3 itemList={products3} />
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="container-fluid p-4" style={{ textAlign: 'center' }}>
+        Error
+      </div>
+    );
+  }
 };
-
-export default connect(mapStateToProps, {
-  fetchCategories: categoryOperations.fetchCategories,
-  startLoader: loader.startLoader,
-})(CategoryListContainer);
+export default CategoryListContainer;
