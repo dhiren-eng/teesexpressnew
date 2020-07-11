@@ -34,3 +34,11 @@ For starting the project :
 
 1. In terminal in teesexpressnew > npm run start-dev
 2. Then in a new terminal in teesexpressnew/website_client > npm start
+
+Screenshots :
+
+![Imgur](https://i.imgur.com/M0tjky6.png)
+
+![Imgur](https://i.imgur.com/PwmgHl9.png)
+
+![Imgur](https://i.imgur.com/z2OfiW8.png)
