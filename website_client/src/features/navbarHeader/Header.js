@@ -1,14 +1,10 @@
 import React, { useContext } from 'react';
-import CartIcon from '../cart/CartIcon';
 import { Link } from 'react-router-dom';
-import LoginButton from '../login/LoginButton';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import './Header.css';
 import DropdownItem from './DropdownItem';
 import SearchInput from '../search/SearchInput';
-import { connect } from 'react-redux';
 import { contextObject } from '../../Context/Store';
-import { categoryOperations } from '../products/ducks';
 const DropdownList = displayListHOC(DropdownItem);
 const Header = () => {
   var { products } = useContext(contextObject);
@@ -64,17 +60,6 @@ const Header = () => {
                 )}
               </ul>
             </div>
-            <Link to="/aboutUs" className="nav-link">
-              ABOUT US
-            </Link>
-
-            <Link to="/orderSample" className="nav-link">
-              ORDER SAMPLE
-            </Link>
-
-            <Link to="/clearanceSale" className="nav-link">
-              CLEARANCE SALE
-            </Link>
             <div className="container-4 nav-item ml-auto">
               <SearchInput />
             </div>

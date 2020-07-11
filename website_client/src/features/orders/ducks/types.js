@@ -1,3 +1,0 @@
-const FETCH_ORDERS = 'FETCH_ORDERS';
-const ADD_ORDER = 'ADD_ORDER';
-export default { FETCH_ORDERS, ADD_ORDER };

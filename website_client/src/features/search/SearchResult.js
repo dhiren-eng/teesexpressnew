@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Storage from '@aws-amplify/storage';
 import { searchOperations } from './ducks';
-import { loader } from '../loadFeature/ducks';
-import LoadingOverlay from 'react-loading-overlay';
 import { contextObject } from '../../Context/Store';
 const SearchResult = (props) => {
   var [state, updateState] = useState({ urlArr: [] });

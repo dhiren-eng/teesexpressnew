@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from 'react';
 import { categoryOperations } from './ducks';
 import displayListHOC from '../../commonComponents/displayListHOC';
 import CategoryItem from './CategoryItem';
-import { loader } from '../loadFeature/ducks';
 import { contextObject } from '../../Context/Store';
 import _ from 'lodash';
 let Column1 = displayListHOC(CategoryItem);
