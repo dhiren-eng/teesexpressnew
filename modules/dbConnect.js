@@ -1,7 +1,9 @@
 const mgClient = require('mongodb').MongoClient;
 const objectId = require('mongodb').ObjectID;
 const dbName = 'website';
-const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/27017/';
+const dbURL =
+  process.env.MONGODB_URI ||
+  'mongodb+srv://dhiren:t3741100dp@merchexpress.ba962.mongodb.net/test?retryWrites=true&w=majority';
 const mongoOption = { useNewUrlParser: true, useUnifiedTopology: true };
 const state = {
   db: null,
