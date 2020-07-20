@@ -10,6 +10,8 @@ Flow of app :
 
 1. When user opens app. Homepage is opened and products are fetched from database and stored in global store configured in Context > Store.js using context api and useReducer hook . These products are then taken from global store by the component products > CategoryListContainer using useContext and displayed in Homepage (CategoryListContainer is imported in component home > Homepage.js and displayed there)
 
+UPDATE : A single context object cannot be used to replace the redux functionality of slective rendering of components. The reason is that if multiple components are using the data of the same context object using useContext hook , all the components will re-render when the requirement could be to re-render only a few components. So we will have unnecessary re-renders as a side effect.
+
 2. In products module/folder, components are divided into presentational components (holding only layout of the component) and container components (where the data fetch call and data access from global store is done). eg. CategoryListContainer.js is container component & CategoryListComponent.js is presentational component
 
 3. On clicking any product image or any option of the dropdown "Shop" in navigation bar user will be directed to a page where user can specify the requirements for bulk order. As the requirements are mentioned, the total price and total quantity gets updated simultaneously using useState in products > CategoryDetailsComponent.js . Placing the order is not enabled in this POC, only requirements mentioning is enabled
